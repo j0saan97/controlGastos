@@ -53,7 +53,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F2-03** `vercel.json` (SPA rewrites)
 - [x] **F2-04** `.env.example`
 - [ ] **F2-05** Iconos `icon-192.png` y `icon-512.png`
-- [ ] **F2-06** Repo GitHub
+- [x] **F2-06** Repo GitHub (`j0saan97/controlGastos`, rama de trabajo `dev`)
 - [ ] **F2-07** Proyecto Vercel + variables de entorno
 - [ ] **F2-08** Primer deploy
 - [ ] **F2-09** Instalar PWA en el móvil y comprobar
