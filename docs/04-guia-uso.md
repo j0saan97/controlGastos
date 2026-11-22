@@ -7,6 +7,10 @@
 2. Confirma el email.
 3. Menú del navegador → **Añadir a pantalla de inicio** (se instala como app).
 
+**En el PC**: abre la misma URL e inicia sesión con tu cuenta (mismos datos).
+En pantallas anchas el menú aparece a la izquierda. En Chrome / Edge también
+puedes instalarla con el icono de instalar de la barra de direcciones.
+
 ## 2. Configurar carteras (pestaña Carteras)
 Crea una por cada sitio donde tienes dinero, con su saldo actual:
 

@@ -143,6 +143,10 @@ RNF-13 [M] Divisa única: euros, con 2 decimales.                     (D01)
 --------------
 RNF-20 [M] Diseño pensado primero para el móvil, con barra de pestañas
            abajo.                                              (D12, F4-02)
+RNF-26 [M] Responsive: también usable en PC. A partir de 900 px de
+           ancho la barra de pestañas pasa a menú lateral, el contenido
+           se centra con un máximo de 960 px y el dashboard muestra 4
+           tarjetas por fila. En el móvil no cambia nada.  (D14, F4-07)
 RNF-21 [M] Interfaz y mensajes en español; fechas e importes en formato
            es-ES.
 RNF-22 [M] Apuntar un gasto en menos de 10 segundos (3 campos mínimos:

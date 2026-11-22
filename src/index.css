@@ -27,3 +27,29 @@ input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #2a2e
 
 .login { max-width: 360px; margin: 15vh auto 0; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
 .msg { color: var(--muted); font-size: 14px; }
+
+/* Etiquetas y marca: en móvil se ve la versión corta y no hay marca */
+.brand, .label-long { display: none; }
+
+/* ---------- Escritorio (≥ 900px): menú lateral + contenido centrado ---------- */
+@media (min-width: 900px) {
+  :root { --sidebar: 220px; }
+  .app { flex-direction: row; }
+
+  .tabbar { top: 0; right: auto; width: var(--sidebar); flex-direction: column; gap: 4px;
+    padding: 24px 12px; border-top: 0; border-right: 1px solid #2a2e37; }
+  .tabbar .brand { display: block; font-size: 18px; font-weight: 700; padding: 0 12px 20px; }
+  .tabbar a { flex: none; text-align: left; font-size: 15px; padding: 10px 12px; border-radius: 10px; }
+  .tabbar a:hover { background: #22262f; color: var(--text); }
+  .tabbar a.active { background: #22262f; }
+  .label-short { display: none; }
+  .label-long { display: inline; }
+
+  .content { margin-left: var(--sidebar); padding: 32px; }
+  .content > * { max-width: 960px; margin-left: auto; margin-right: auto; }
+
+  .grid { grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 14px; }
+  .card { padding: 18px; }
+  .card.big strong { font-size: 40px; }
+  button { cursor: pointer; }
+}

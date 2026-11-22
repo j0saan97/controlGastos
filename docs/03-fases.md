@@ -77,6 +77,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [ ] **F4-04** Recuperar contraseña
 - [ ] **F4-05** Configurar emails de Supabase en español
 - [ ] **F4-06** Pantalla de bienvenida (sin carteras → crear la primera)
+- [x] **F4-07** Layout responsive: ≥ 900px menú lateral, contenido máx. 960px, dashboard 4 columnas
 
 ## F5 · Carteras
 - [ ] **F5-01** Listado con saldo y total

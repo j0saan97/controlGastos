@@ -17,3 +17,4 @@ Registro de decisiones (ADR resumido).
 | D11 | Categorías libres | Cada usuario las organiza a su manera | Lista fija por defecto |
 | D12 | PWA móvil primero | Apuntar gastos en el momento | Escritorio |
 | D13 | Multiusuario con RLS | Abierta a registro, datos aislados | Usuario único |
+| D14 | Responsive: móvil primero + PC (≥ 900px menú lateral) | Revisar datos y gráficos cómodamente en el PC con la misma app | Solo móvil · App de escritorio aparte |
