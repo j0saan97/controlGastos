@@ -1,0 +1,29 @@
+:root {
+  --bg: #0f1115; --card: #1a1d24; --text: #e8e8ea; --muted: #8b8f98;
+  --pos: #3ecf8e; --neg: #ff6b6b; --accent: #4f8cff;
+  color-scheme: dark;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); }
+button { background: var(--accent); color: #fff; border: 0; border-radius: 10px; padding: 10px 14px; font-size: 15px; }
+button.link { background: none; color: var(--muted); }
+input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #2a2e37; background: var(--card); color: var(--text); font-size: 16px; }
+
+.app { min-height: 100dvh; display: flex; flex-direction: column; }
+.content { flex: 1; padding: 16px 16px 90px; }
+.tabbar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; background: var(--card);
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom)); border-top: 1px solid #2a2e37; }
+.tabbar a { flex: 1; text-align: center; color: var(--muted); text-decoration: none; font-size: 13px; padding: 6px 0; }
+.tabbar a.active { color: var(--accent); font-weight: 600; }
+
+.row { display: flex; justify-content: space-between; align-items: center; }
+.card { background: var(--card); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+.card span { color: var(--muted); font-size: 13px; }
+.card strong { font-size: 20px; }
+.card.big strong { font-size: 32px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+
+.login { max-width: 360px; margin: 15vh auto 0; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.msg { color: var(--muted); font-size: 14px; }
