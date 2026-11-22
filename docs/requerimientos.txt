@@ -1,1 +1,193 @@
-requerimientos.txt
+REQUERIMIENTOS · App de gastos (controlGastos)
+=============================================
+
+Objetivo
+--------
+PWA móvil para controlar el dinero personal: saber cuánto hay en cada
+cartera, qué obligaciones quedan por pagar este mes y cuánto queda
+"disponible de verdad". Incluye el saldo de poker leído de un Google Sheet.
+
+Convenciones
+------------
+- RF-xx = requerimiento funcional · RNF-xx = requerimiento no funcional.
+- Prioridad: [M] imprescindible · [D] deseable · [F] futuro.
+- "Fase" remite a la tarea correspondiente en 03-fases.md.
+
+
+======================================================================
+1. REQUERIMIENTOS FUNCIONALES
+======================================================================
+
+1.1 Cuentas y acceso
+--------------------
+RF-01 [M] Registro con email y contraseña.                        (F4-01)
+RF-02 [M] Inicio y cierre de sesión.                         (F4-01, F4-03)
+RF-03 [M] Recuperar la contraseña por email.                        (F4-04)
+RF-04 [D] Emails de autenticación en español.                       (F4-05)
+RF-05 [M] Multiusuario abierto: cualquiera puede registrarse y cada
+          usuario solo ve y modifica sus propios datos.             (F0-01)
+RF-06 [D] Si el usuario no tiene carteras, mostrar una bienvenida que
+          le lleve a crear la primera.                              (F4-06)
+
+1.2 Carteras
+------------
+RF-10 [M] Listar las carteras con su saldo y el total de todas.      (F5-01)
+RF-11 [M] Crear cartera con nombre, tipo (banco, billetera, poker,
+          efectivo) y saldo inicial.                                (F5-02)
+RF-12 [M] Editar el saldo a mano. Es la forma de mover dinero entre
+          carteras: no hay transferencias y no cuenta como gasto ni
+          ingreso.                                           (F5-03, F0-05)
+RF-13 [M] Configurar una cartera Poker con origen Google Sheet: URL del
+          CSV publicado y celdas de saldo y P/L (por defecto A1 y B1). (F5-04)
+RF-14 [D] Archivar una cartera. Solo se puede eliminar si no tiene
+          movimientos pagados.                                      (F5-05)
+RF-15 [D] Mostrar en la cartera Poker la última sincronización y el
+          P/L del día.                                              (F5-06)
+RF-16 [M] Guardar una foto diaria del saldo de cada cartera para el
+          histórico.                                                (F1-03)
+
+1.3 Categorías
+--------------
+RF-20 [M] Categorías libres por usuario, separadas en ingresos y gastos. (F6-01)
+RF-21 [M] Crear y editar categorías con nombre y color.       (F6-02, F6-03)
+RF-22 [M] Al eliminar una categoría, sus movimientos quedan como
+          "Sin categoría" (no se borran).                           (F6-04)
+
+1.4 Fijos (plantillas mensuales)
+--------------------------------
+RF-30 [M] Crear plantillas de fijos: nombre, tipo, categoría, importe
+          por defecto y día del mes.                         (F7-01, F7-02)
+RF-31 [M] Editar, desactivar y eliminar plantillas.                 (F7-03)
+RF-32 [M] Generar los fijos del mes como movimientos pendientes con
+          el importe por defecto, sin duplicar si ya existen.  (F7-04, F1-04)
+RF-33 [D] Generarlos automáticamente al abrir un mes nuevo.         (F7-05)
+RF-34 [M] Si el día de la plantilla no existe en el mes (p. ej. 31),
+          usar el último día del mes.                               (F1-04)
+RF-35 [M] Poder cambiar el importe de un fijo solo en un mes concreto,
+          sin tocar la plantilla.                                   (F0-07)
+
+1.5 Movimientos del mes
+-----------------------
+RF-40 [M] Selector de mes (anterior / siguiente).                   (F8-01)
+RF-41 [M] Listar los movimientos del mes: pendientes arriba y pagados
+          abajo.                                                    (F8-02)
+RF-42 [M] Crear un movimiento variable (gasto o ingreso) con nombre,
+          importe, categoría, fecha prevista y nota opcional. Se crea
+          como pendiente.                                           (F8-03)
+RF-43 [M] Editar y eliminar movimientos.                     (F8-04, F8-05)
+RF-44 [M] Marcar como pagado / cobrado eligiendo la cartera. El gasto
+          resta de la cartera y el ingreso suma.             (F8-06, F0-06)
+RF-45 [M] Desmarcar un pagado: vuelve a pendiente y el dinero vuelve a
+          la cartera.                                               (F8-07)
+RF-46 [M] Editar o borrar un pagado ajusta el saldo de la cartera
+          automáticamente.                                          (F1-02)
+RF-47 [D] Filtrar por tipo, categoría, fijo/variable y estado.      (F8-08)
+RF-48 [M] Mostrar los totales del mes en la cabecera.               (F8-09)
+RF-49 [M] Importes siempre positivos; el signo lo da el tipo
+          (gasto / ingreso).                                          (D07)
+
+1.6 Dashboard
+-------------
+RF-50 [M] Mostrar: disponible real, total en carteras, obligaciones
+          pendientes, ingresos pendientes y P/L de poker del día.   (F9-01)
+          Disponible real = total carteras − gastos pendientes
+                            + ingresos pendientes.
+RF-51 [D] Gráfico de gasto por categoría del mes.                   (F9-03)
+RF-52 [D] Evolución del patrimonio de los últimos 12 meses.         (F9-04)
+RF-53 [D] Ingresos frente a gastos por mes.                         (F9-05)
+RF-54 [D] Próximas obligaciones de los siguientes 7 días.           (F9-06)
+
+1.7 Sincronización con Google Sheet (poker)
+-------------------------------------------
+RF-60 [M] Leer de la pestaña "app" del Sheet publicado como CSV el
+          saldo total de poker (A1) y el P/L del día (B1).   (F3-01, F3-06)
+RF-61 [M] Aceptar números en formato español ("1.234,56 €").        (F3-01)
+RF-62 [M] Sincronizar al abrir la app y con el botón "Refrescar".   (F3-03)
+RF-63 [M] Sincronizar automáticamente cada día a las 03:00 hora de
+          Madrid, también con el cambio de hora.             (F3-04, F3-05)
+RF-64 [M] El P/L del día es solo informativo: no crea movimientos.   (D04)
+RF-65 [M] Si una celda no es numérica, avisar del error sin modificar
+          el saldo.                                                 (F3-01)
+
+
+======================================================================
+2. REQUERIMIENTOS NO FUNCIONALES
+======================================================================
+
+2.1 Seguridad y privacidad
+--------------------------
+RNF-01 [M] Row Level Security en todas las tablas: cada fila solo es
+           accesible por su propietario (user_id = auth.uid()).    (F1-08)
+RNF-02 [M] Las vistas respetan RLS (security_invoker = true).
+RNF-03 [M] La clave service_role solo existe en el servidor (Vercel),
+           nunca en el front ni en el repositorio.
+RNF-04 [M] /api/cron-sync exige "Authorization: Bearer CRON_SECRET".
+RNF-05 [M] /api/sync-sheet exige el JWT del usuario y solo toca sus
+           carteras.
+RNF-06 [M] Al pagar, la cartera elegida debe pertenecer al mismo
+           usuario (lo valida el trigger).
+RNF-07 [M] Del Sheet solo se publican 2 celdas (pestaña "app"), no la
+           hoja entera.
+RNF-08 [M] Los secretos (.env.local, claves) nunca se suben a git.
+
+2.2 Integridad de datos
+-----------------------
+RNF-10 [M] Los saldos los mueve la base de datos (triggers), no el
+           front: un fallo del cliente no puede descuadrarlos.       (D06)
+RNF-11 [M] Generar fijos es idempotente (índice único recurring_id +
+           month).
+RNF-12 [M] Una foto de saldo por cartera y día (hora de Madrid).
+RNF-13 [M] Divisa única: euros, con 2 decimales.                     (D01)
+
+2.3 Usabilidad
+--------------
+RNF-20 [M] Diseño pensado primero para el móvil, con barra de pestañas
+           abajo.                                              (D12, F4-02)
+RNF-21 [M] Interfaz y mensajes en español; fechas e importes en formato
+           es-ES.
+RNF-22 [M] Apuntar un gasto en menos de 10 segundos (3 campos mínimos:
+           nombre, importe, categoría).
+RNF-23 [D] Zonas táctiles de al menos 44×44 px y contraste suficiente
+           (WCAG AA).                                              (F10-07)
+RNF-24 [D] Mensajes de éxito y error (toasts), estados de carga y de
+           lista vacía.                                    (F10-01, F10-02)
+RNF-25 [D] Validar los formularios antes de enviarlos.             (F10-03)
+
+2.4 PWA y disponibilidad
+------------------------
+RNF-30 [M] Instalable en el móvil (manifest con iconos de 192 y 512 px).
+                                                           (F2-02, F2-05)
+RNF-31 [M] La app abre aunque no haya conexión (shell en caché) y
+           muestra un aviso de "sin conexión".                     (F10-04)
+RNF-32 [M] Al recargar cualquier ruta no da 404 (rewrites SPA).     (F2-03)
+
+2.5 Rendimiento
+---------------
+RNF-40 [D] El dashboard carga en menos de 2 s con una conexión 4G.
+RNF-41 [D] Los cálculos agregados (dashboard, totales, histórico) se
+           hacen en la base de datos (RPC / vistas), no en el cliente.
+
+2.6 Coste y plataforma
+----------------------
+RNF-50 [M] Funcionar con los planes gratuitos de Supabase y Vercel
+           (Hobby).
+RNF-51 [M] Stack: React 18 + TypeScript + Vite, Supabase (PostgreSQL,
+           Auth, pg_cron), Vercel Functions.
+
+2.7 Mantenibilidad
+------------------
+RNF-60 [M] TypeScript estricto; tipos de la BD generados desde
+           Supabase.                                                (F1-12)
+RNF-61 [D] Tests unitarios del parser del Sheet con vitest.        (F10-05)
+RNF-62 [M] Documentación al día en docs/ (fases, decisiones, API).
+RNF-63 [M] Trabajo en la rama dev; main solo recibe código estable.
+
+
+======================================================================
+3. FUERA DE ALCANCE (por ahora)
+======================================================================
+- Importación bancaria automática (D02).
+- Transferencias entre carteras (D03).
+- Varias divisas (D01).
+- Ideas futuras: Google Sheets por OAuth, exportar a CSV/Excel,
+  notificaciones, presupuestos por categoría, foto del ticket (F11).
