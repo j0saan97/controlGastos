@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { eur, getDashboard, syncSheet } from '../lib/api'
+import { Link } from 'react-router-dom'
+import { eur, getDashboard, listWallets, syncSheet } from '../lib/api'
 import { supabase } from '../lib/supabase'
 import type { Dashboard as D } from '../types/db'
 
@@ -8,8 +9,14 @@ export default function Dashboard() {
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
 
+  const [hasWallets, setHasWallets] = useState<boolean | null>(null)
+
   const load = useCallback(async () => {
-    try { setD(await getDashboard()) } catch (e) { setErr((e as Error).message) }
+    try {
+      const [dash, wallets] = await Promise.all([getDashboard(), listWallets()])
+      setD(dash)
+      setHasWallets(wallets.some((w) => !w.archived))
+    } catch (e) { setErr((e as Error).message) }
   }, [])
 
   // al abrir: lee el Sheet y luego carga el dashboard
@@ -24,6 +31,19 @@ export default function Dashboard() {
   }
 
   if (!d) return <p>{err || 'Cargando…'}</p>
+
+  // F4-06: sin carteras → bienvenida
+  if (hasWallets === false) {
+    return (
+      <section className="welcome">
+        <h2>¡Bienvenido!</h2>
+        <p>Para empezar, crea tus carteras: una por cada sitio donde tengas dinero
+          (banco, Skrill, Wise, poker, efectivo…) con su saldo actual.</p>
+        <Link className="button" to="/carteras?nueva=1">Crear mi primera cartera</Link>
+        <button className="link" onClick={() => supabase.auth.signOut()}>Cerrar sesión</button>
+      </section>
+    )
+  }
 
   return (
     <section>

@@ -6,6 +6,7 @@ import Layout from './components/Layout'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Placeholder from './pages/Placeholder'
+import Wallets from './pages/Wallets'
 
 export default function App() {
   const [session, setSession] = useState<Session | null | undefined>(undefined)
@@ -24,7 +25,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<Dashboard />} />
         <Route path="movimientos" element={<Placeholder title="Movimientos" />} />
-        <Route path="carteras" element={<Placeholder title="Carteras" />} />
+        <Route path="carteras" element={<Wallets />} />
         <Route path="fijos" element={<Placeholder title="Fijos" />} />
         <Route path="categorias" element={<Placeholder title="Categorías" />} />
         <Route path="*" element={<Navigate to="/" />} />

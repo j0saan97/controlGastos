@@ -28,6 +28,45 @@ input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #2a2e
 .login { max-width: 360px; margin: 15vh auto 0; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
 .msg { color: var(--muted); font-size: 14px; }
 
+button:disabled { opacity: .6; }
+button.secondary { background: #2a2e37; color: var(--text); }
+button.danger { background: none; color: var(--neg); border: 1px solid var(--neg); }
+a.button { display: inline-block; text-align: center; background: var(--accent); color: #fff;
+  border-radius: 10px; padding: 12px 14px; text-decoration: none; font-weight: 600; }
+select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #2a2e37; background: var(--card);
+  color: var(--text); font-size: 16px; }
+
+/* Formularios */
+.form { display: flex; flex-direction: column; gap: 14px; }
+.form label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--muted); }
+.form label.check { flex-direction: row; align-items: center; gap: 10px; font-size: 15px; color: var(--text); }
+.form label.check input { width: 20px; height: 20px; }
+.form .grid { margin-top: 0; }
+.form .actions { gap: 10px; }
+.form .actions button { flex: 1; }
+
+/* Listas */
+.list { list-style: none; padding: 0; margin: 14px 0; display: flex; flex-direction: column; gap: 8px; }
+.list.muted { opacity: .6; }
+.list-item { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  background: var(--card); color: var(--text); text-align: left; padding: 14px; border-radius: 14px; min-height: 56px; }
+.list-item > div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.list-item span { color: var(--muted); font-size: 13px; }
+.list-item .amount { align-items: flex-end; flex-shrink: 0; }
+.list-item .amount span.pos { color: var(--pos); } .list-item .amount span.neg { color: var(--neg); }
+
+/* Modal: hoja inferior en móvil */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: flex-end;
+  justify-content: center; z-index: 10; }
+.modal { background: var(--bg); width: 100%; max-height: 90dvh; overflow-y: auto; border-radius: 18px 18px 0 0;
+  padding: 16px 16px calc(24px + env(safe-area-inset-bottom)); }
+.modal h3 { margin: 0; }
+.modal header { margin-bottom: 12px; }
+
+/* Bienvenida */
+.welcome { display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin-top: 10vh; }
+.welcome p { color: var(--muted); line-height: 1.5; margin: 0; }
+
 /* Etiquetas y marca: en móvil se ve la versión corta y no hay marca */
 .brand, .label-long { display: none; }
 
@@ -52,4 +91,8 @@ input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #2a2e
   .card { padding: 18px; }
   .card.big strong { font-size: 40px; }
   button { cursor: pointer; }
+  .list-item:hover { background: #22262f; }
+  .modal-backdrop { align-items: center; }
+  .modal { max-width: 480px; border-radius: 18px; padding: 24px; }
+  .welcome { margin-left: auto; margin-right: auto; }
 }

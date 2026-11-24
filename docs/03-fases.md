@@ -9,8 +9,8 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 | F1 | Base de datos | ✅ Hecho |
 | F2 | Proyecto base y PWA | 🟡 Faltan iconos y deploy |
 | F3 | Sync Google Sheet + cron | 🟡 Falta probar en real |
-| F4 | Auth y layout | 🟡 |
-| F5 | Carteras | ⬜ |
+| F4 | Auth y layout | 🟡 Faltan recuperar contraseña y emails |
+| F5 | Carteras | ✅ Hecho (sync Poker se prueba en F3) |
 | F6 | Categorías | ⬜ |
 | F7 | Fijos | ⬜ |
 | F8 | Movimientos del mes | ⬜ |
@@ -76,16 +76,16 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F4-03** Cerrar sesión
 - [ ] **F4-04** Recuperar contraseña
 - [ ] **F4-05** Configurar emails de Supabase en español
-- [ ] **F4-06** Pantalla de bienvenida (sin carteras → crear la primera)
+- [x] **F4-06** Pantalla de bienvenida (sin carteras → crear la primera)
 - [x] **F4-07** Layout responsive: ≥ 900px menú lateral, contenido máx. 960px, dashboard 4 columnas
 
 ## F5 · Carteras
-- [ ] **F5-01** Listado con saldo y total
-- [ ] **F5-02** Crear cartera (nombre, tipo, saldo inicial)
-- [ ] **F5-03** Editar saldo rápido (para mover dinero a mano)
-- [ ] **F5-04** Configurar cartera Poker (URL CSV, celdas)
-- [ ] **F5-05** Archivar / eliminar (solo si no tiene pagos)
-- [ ] **F5-06** Mostrar última sincronización y P/L del día
+- [x] **F5-01** Listado con saldo y total
+- [x] **F5-02** Crear cartera (nombre, tipo, saldo inicial)
+- [x] **F5-03** Editar saldo rápido (para mover dinero a mano)
+- [x] **F5-04** Configurar cartera Poker (URL CSV, celdas)
+- [x] **F5-05** Archivar / eliminar (solo si no tiene pagos)
+- [x] **F5-06** Mostrar última sincronización y P/L del día
 
 ## F6 · Categorías
 - [ ] **F6-01** Listado separado ingresos / gastos

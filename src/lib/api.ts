@@ -1,5 +1,5 @@
 import { supabase } from './supabase'
-import type { Dashboard } from '../types/db'
+import type { Dashboard, Wallet } from '../types/db'
 
 export const eur = (n: number | null | undefined) =>
   (n ?? 0).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })
@@ -39,6 +39,39 @@ export async function markPending(txId: string) {
     .from('transactions')
     .update({ status: 'pending', wallet_id: null, paid_at: null })
     .eq('id', txId)
+  if (error) throw error
+}
+
+// ---------- Carteras ----------
+
+export type WalletInput = Pick<
+  Wallet,
+  'name' | 'type' | 'balance' | 'source' | 'sheet_csv_url' | 'sheet_balance_cell' | 'sheet_pnl_cell'
+>
+
+export async function listWallets(): Promise<Wallet[]> {
+  const { data, error } = await supabase
+    .from('wallets')
+    .select('*')
+    .order('created_at')
+  if (error) throw error
+  return data as Wallet[]
+}
+
+export async function createWallet(w: WalletInput) {
+  const { error } = await supabase.from('wallets').insert(w)
+  if (error) throw error
+}
+
+export async function updateWallet(id: string, patch: Partial<WalletInput> & { archived?: boolean }) {
+  const { error } = await supabase.from('wallets').update(patch).eq('id', id)
+  if (error) throw error
+}
+
+/** Solo se puede borrar si ningún movimiento pagado apunta a ella (FK) */
+export async function deleteWallet(id: string) {
+  const { error } = await supabase.from('wallets').delete().eq('id', id)
+  if (error?.code === '23503') throw new Error('Tiene movimientos pagados. Archívala en su lugar.')
   if (error) throw error
 }
 
