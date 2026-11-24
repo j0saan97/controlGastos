@@ -1,5 +1,35 @@
 import { supabase } from './supabase'
-import type { Dashboard, Wallet } from '../types/db'
+import type { Category, Dashboard, Kind, Wallet } from '../types/db'
+
+// ---------- Categorías ----------
+
+export type CategoryInput = { name: string; kind: Kind; color: string }
+
+const DUPLICATE = '23505'
+
+export async function listCategories(): Promise<Category[]> {
+  const { data, error } = await supabase.from('categories').select('id, name, kind, color').order('name')
+  if (error) throw error
+  return data as Category[]
+}
+
+export async function createCategories(rows: CategoryInput[]) {
+  const { error } = await supabase.from('categories').insert(rows)
+  if (error?.code === DUPLICATE) throw new Error('Ya existe una categoría con ese nombre')
+  if (error) throw error
+}
+
+export async function updateCategory(id: string, patch: Partial<CategoryInput>) {
+  const { error } = await supabase.from('categories').update(patch).eq('id', id)
+  if (error?.code === DUPLICATE) throw new Error('Ya existe una categoría con ese nombre')
+  if (error) throw error
+}
+
+/** Los movimientos y fijos que la usaban quedan "Sin categoría" (FK on delete set null) */
+export async function deleteCategory(id: string) {
+  const { error } = await supabase.from('categories').delete().eq('id', id)
+  if (error) throw error
+}
 
 export const eur = (n: number | null | undefined) =>
   (n ?? 0).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })

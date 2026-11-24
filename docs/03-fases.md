@@ -11,7 +11,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 | F3 | Sync Google Sheet + cron | 🟡 Falta probar en real |
 | F4 | Auth y layout | 🟡 Faltan recuperar contraseña y emails |
 | F5 | Carteras | ✅ Hecho (sync Poker se prueba en F3) |
-| F6 | Categorías | ⬜ |
+| F6 | Categorías | ✅ Hecho |
 | F7 | Fijos | ⬜ |
 | F8 | Movimientos del mes | ⬜ |
 | F9 | Dashboard y gráficos | 🟡 |
@@ -88,10 +88,10 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F5-06** Mostrar última sincronización y P/L del día
 
 ## F6 · Categorías
-- [ ] **F6-01** Listado separado ingresos / gastos
-- [ ] **F6-02** Crear con nombre y color
-- [ ] **F6-03** Editar
-- [ ] **F6-04** Eliminar (movimientos quedan "Sin categoría")
+- [x] **F6-01** Listado separado ingresos / gastos
+- [x] **F6-02** Crear con nombre y color
+- [x] **F6-03** Editar
+- [x] **F6-04** Eliminar (movimientos quedan "Sin categoría")
 
 ## F7 · Fijos
 - [ ] **F7-01** Listado de plantillas (activo / inactivo)
