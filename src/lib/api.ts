@@ -1,5 +1,35 @@
 import { supabase } from './supabase'
-import type { Category, Dashboard, Kind, Wallet } from '../types/db'
+import type { Category, Dashboard, Kind, RecurringItem, Wallet } from '../types/db'
+
+// ---------- Fijos (plantillas) ----------
+
+export type RecurringInput = Omit<RecurringItem, 'id'>
+
+export async function listRecurring(): Promise<RecurringItem[]> {
+  const { data, error } = await supabase
+    .from('recurring_items')
+    .select('id, name, kind, category_id, default_amount, day_of_month, active')
+    .order('day_of_month')
+    .order('name')
+  if (error) throw error
+  return data as RecurringItem[]
+}
+
+export async function createRecurring(r: RecurringInput) {
+  const { error } = await supabase.from('recurring_items').insert(r)
+  if (error) throw error
+}
+
+export async function updateRecurring(id: string, patch: Partial<RecurringInput>) {
+  const { error } = await supabase.from('recurring_items').update(patch).eq('id', id)
+  if (error) throw error
+}
+
+/** Los movimientos ya generados se conservan (recurring_id → null) */
+export async function deleteRecurring(id: string) {
+  const { error } = await supabase.from('recurring_items').delete().eq('id', id)
+  if (error) throw error
+}
 
 // ---------- Categorías ----------
 

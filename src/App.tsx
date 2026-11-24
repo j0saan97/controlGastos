@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard'
 import Placeholder from './pages/Placeholder'
 import Wallets from './pages/Wallets'
 import Categories from './pages/Categories'
+import Recurring from './pages/Recurring'
 
 export default function App() {
   const [session, setSession] = useState<Session | null | undefined>(undefined)
@@ -27,7 +28,7 @@ export default function App() {
         <Route index element={<Dashboard />} />
         <Route path="movimientos" element={<Placeholder title="Movimientos" />} />
         <Route path="carteras" element={<Wallets />} />
-        <Route path="fijos" element={<Placeholder title="Fijos" />} />
+        <Route path="fijos" element={<Recurring />} />
         <Route path="categorias" element={<Categories />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Route>

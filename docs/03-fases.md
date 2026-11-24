@@ -12,7 +12,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 | F4 | Auth y layout | 🟡 Faltan recuperar contraseña y emails |
 | F5 | Carteras | ✅ Hecho (sync Poker se prueba en F3) |
 | F6 | Categorías | ✅ Hecho |
-| F7 | Fijos | ⬜ |
+| F7 | Fijos | ✅ Hecho |
 | F8 | Movimientos del mes | ⬜ |
 | F9 | Dashboard y gráficos | 🟡 |
 | F10 | Pulido y pruebas | ⬜ |
@@ -94,11 +94,11 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F6-04** Eliminar (movimientos quedan "Sin categoría")
 
 ## F7 · Fijos
-- [ ] **F7-01** Listado de plantillas (activo / inactivo)
-- [ ] **F7-02** Crear (nombre, tipo, categoría, importe por defecto, día)
-- [ ] **F7-03** Editar / desactivar / eliminar
-- [ ] **F7-04** Botón "Generar fijos del mes"
-- [ ] **F7-05** Generar automáticamente al abrir un mes nuevo
+- [x] **F7-01** Listado de plantillas (activo / inactivo)
+- [x] **F7-02** Crear (nombre, tipo, categoría, importe por defecto, día)
+- [x] **F7-03** Editar / desactivar / eliminar
+- [x] **F7-04** Botón "Generar fijos del mes"
+- [x] **F7-05** Generar automáticamente al abrir un mes nuevo
 
 ## F8 · Movimientos del mes
 - [ ] **F8-01** Selector de mes (‹ noviembre 2026 ›)

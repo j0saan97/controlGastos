@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { eur, getDashboard, listWallets, syncSheet } from '../lib/api'
+import { eur, generateMonth, getDashboard, listWallets, syncSheet } from '../lib/api'
 import { supabase } from '../lib/supabase'
 import type { Dashboard as D } from '../types/db'
 
@@ -19,9 +19,9 @@ export default function Dashboard() {
     } catch (e) { setErr((e as Error).message) }
   }, [])
 
-  // al abrir: lee el Sheet y luego carga el dashboard
+  // al abrir: lee el Sheet + genera los fijos del mes (F7-05, no duplica) y carga
   useEffect(() => {
-    syncSheet().catch(() => {}).finally(load)
+    Promise.allSettled([syncSheet(), generateMonth()]).finally(load)
   }, [load])
 
   async function refresh() {
