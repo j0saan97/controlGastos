@@ -6,7 +6,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 | Fase | Nombre | Estado |
 |------|--------|--------|
 | F0 | Requisitos y diseño | ✅ Hecho |
-| F1 | Base de datos | 🟡 Falta ejecutar en Supabase |
+| F1 | Base de datos | ✅ Hecho |
 | F2 | Proyecto base y PWA | 🟡 Faltan iconos y deploy |
 | F3 | Sync Google Sheet + cron | 🟡 Falta probar en real |
 | F4 | Auth y layout | 🟡 |
@@ -43,9 +43,9 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F1-07** Vistas `v_category_totals`, `v_month_totals`
 - [x] **F1-08** RLS en todas las tablas
 - [x] **F1-09** Test local en PostgreSQL 16 (pagos, reversión, fijos, RLS)
-- [ ] **F1-10** Crear proyecto Supabase
-- [ ] **F1-11** Ejecutar `supabase/01_schema.sql`
-- [ ] **F1-12** Generar tipos: `npx supabase gen types typescript`
+- [x] **F1-10** Crear proyecto Supabase
+- [x] **F1-11** Ejecutar `supabase/01_schema.sql`
+- [x] **F1-12** Generar tipos: `npx supabase gen types typescript` → `src/lib/database.types.ts`
 
 ## F2 · Proyecto base y PWA
 - [x] **F2-01** Scaffold Vite + React + TS
