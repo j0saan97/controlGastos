@@ -6,3 +6,6 @@ dist
 
 # Supabase CLI cache
 supabase/.temp/
+
+# Notas locales con claves (NUNCA subir)
+SECRETOS.md

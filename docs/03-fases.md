@@ -54,9 +54,10 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F2-04** `.env.example`
 - [ ] **F2-05** Iconos `icon-192.png` y `icon-512.png`
 - [x] **F2-06** Repo GitHub (`j0saan97/controlGastos`, rama de trabajo `dev`)
-- [ ] **F2-07** Proyecto Vercel + variables de entorno
+- [x] **F2-07** Proyecto Vercel + variables de entorno
 - [ ] **F2-08** Primer deploy
 - [ ] **F2-09** Instalar PWA en el móvil y comprobar
+- [ ] **F2-10** Comprobar contraseñas de `SECRETOS.md` (local, no se sube) contra Supabase/Vercel, rellenar contraseña de la BD y rotar la secret key expuesta en capturas
 
 ## F3 · Sync Google Sheet + cron
 - [x] **F3-01** Parser CSV + celdas + formato "1.234,56 €"
