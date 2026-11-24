@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  // Vista previa de v0 / Vercel Sandbox (*.vercel.run) ejecuta `vite` en modo dev
+  server: { allowedHosts: ['.vercel.run'] },
   plugins: [
     react(),
     VitePWA({

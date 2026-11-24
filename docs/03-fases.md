@@ -7,7 +7,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 |------|--------|--------|
 | F0 | Requisitos y diseño | ✅ Hecho |
 | F1 | Base de datos | ✅ Hecho |
-| F2 | Proyecto base y PWA | 🟡 Faltan iconos y deploy |
+| F2 | Proyecto base y PWA | 🟡 Desplegado. Faltan iconos, instalar en móvil, revisar claves |
 | F3 | Sync Google Sheet + cron | 🟡 Falta probar en real |
 | F4 | Auth y layout | 🟡 Faltan recuperar contraseña y emails |
 | F5 | Carteras | ✅ Hecho (sync Poker se prueba en F3) |
@@ -55,7 +55,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [ ] **F2-05** Iconos `icon-192.png` y `icon-512.png`
 - [x] **F2-06** Repo GitHub (`j0saan97/controlGastos`, rama de trabajo `dev`)
 - [x] **F2-07** Proyecto Vercel + variables de entorno
-- [ ] **F2-08** Primer deploy
+- [x] **F2-08** Primer deploy → https://control-gastos-six-mu.vercel.app
 - [ ] **F2-09** Instalar PWA en el móvil y comprobar
 - [ ] **F2-10** Comprobar contraseñas de `SECRETOS.md` (local, no se sube) contra Supabase/Vercel, rellenar contraseña de la BD y rotar la secret key expuesta en capturas
 
