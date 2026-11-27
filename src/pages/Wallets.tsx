@@ -15,6 +15,7 @@ export default function Wallets() {
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
   const [params, setParams] = useSearchParams()
   const [editing, setEditing] = useState<Wallet | 'new' | null>(params.has('nueva') ? 'new' : null)
+  const [newParentId, setNewParentId] = useState<string | undefined>()
 
   const load = useCallback(async () => {
     try { setWallets(await listWallets()) } catch (e) { setErr((e as Error).message) }
@@ -24,6 +25,7 @@ export default function Wallets() {
 
   const close = useCallback(() => {
     setEditing(null)
+    setNewParentId(undefined)
     if (params.has('nueva')) setParams({}, { replace: true })
   }, [params, setParams])
 
@@ -102,10 +104,13 @@ export default function Wallets() {
                 </button>
               </li>
             ))}
-            <li>
-              <button className="list-item link" style={{ justifyContent: 'flex-start', padding: '0.4rem 0.75rem' }}
-                onClick={() => setEditing('new')}>
+            <li className="row">
+              <button className="link" style={{ padding: '0.4rem 0.75rem' }}
+                onClick={() => { setNewParentId(w.id); setEditing('new') }}>
                 + Añadir sala / billetera
+              </button>
+              <button className="link" style={{ padding: '0.4rem 0.75rem' }} onClick={() => setEditing(w)}>
+                Editar grupo
               </button>
             </li>
           </ul>
@@ -171,6 +176,7 @@ export default function Wallets() {
             wallet={editingWallet}
             parentOptions={parentOptions}
             isParent={editingIsParent}
+            defaultParentId={newParentId}
             onDone={done}
           />
         </Modal>

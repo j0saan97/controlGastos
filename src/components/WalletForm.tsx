@@ -24,10 +24,12 @@ type Props = {
   parentOptions?: Wallet[]
   /** Esta cartera ya tiene hijos → su saldo es calculado automáticamente */
   isParent?: boolean
+  /** Grupo preseleccionado al crear desde "+ Añadir" dentro de un grupo */
+  defaultParentId?: string
   onDone: () => void
 }
 
-export default function WalletForm({ wallet, parentOptions = [], isParent = false, onDone }: Props) {
+export default function WalletForm({ wallet, parentOptions = [], isParent = false, defaultParentId, onDone }: Props) {
   const editing = !!wallet
   const [name, setName] = useState(wallet?.name ?? '')
   const [type, setType] = useState<Wallet['type']>(wallet?.type ?? 'bank')
@@ -36,13 +38,13 @@ export default function WalletForm({ wallet, parentOptions = [], isParent = fals
   const [url, setUrl] = useState(wallet?.sheet_csv_url ?? '')
   const [balanceCell, setBalanceCell] = useState(wallet?.sheet_balance_cell ?? 'A1')
   const [pnlCell, setPnlCell] = useState(wallet?.sheet_pnl_cell ?? 'B1')
-  const [parentId, setParentId] = useState<string>(wallet?.parent_id ?? '')
+  const [parentId, setParentId] = useState<string>(wallet?.parent_id ?? defaultParentId ?? '')
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
 
-  const sheet = type === 'poker' && fromSheet
-  // Saldo calculado si es grupo padre o si tiene padre y source=sheet
-  const autoBalance = isParent || (!!parentId && sheet)
+  // Un grupo nunca lee del Sheet: su saldo es la suma de sus salas
+  const sheet = !isParent && type === 'poker' && fromSheet
+  const autoBalance = isParent
 
   async function run(action: () => Promise<unknown>) {
     setBusy(true); setErr('')
@@ -109,14 +111,14 @@ export default function WalletForm({ wallet, parentOptions = [], isParent = fals
         </label>
       )}
 
-      {type === 'poker' && !parentId && (
+      {type === 'poker' && !isParent && (
         <label className="check">
           <input type="checkbox" checked={fromSheet} onChange={(e) => setFromSheet(e.target.checked)} />
           Leer saldo del Google Sheet
         </label>
       )}
 
-      {sheet && !parentId ? (
+      {sheet ? (
         <>
           <label>
             Enlace CSV publicado
