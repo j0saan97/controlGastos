@@ -57,7 +57,7 @@ export default function WalletForm({ wallet, parentOptions = [], isParent = fals
     const amount = autoBalance ? (wallet?.balance ?? 0) : (sheet ? (wallet?.balance ?? 0) : parseAmount(balance))
     if (!name.trim()) return setErr('Pon un nombre')
     if (!autoBalance && !sheet && !Number.isFinite(amount)) return setErr('Saldo no válido. Ejemplo: 1.234,56')
-    if (sheet && !/^https:\/\//.test(url.trim())) return setErr('Pega el enlace CSV publicado (https://…)')
+    if (sheet && !/^https:\/\//.test(url.trim())) return setErr('Pega el enlace de la hoja de Google (https://…)')
     if (sheet && (!CELL.test(balanceCell.toUpperCase()) || !CELL.test(pnlCell.toUpperCase())))
       return setErr('Celdas no válidas. Ejemplo: A1')
 
@@ -121,8 +121,8 @@ export default function WalletForm({ wallet, parentOptions = [], isParent = fals
       {sheet ? (
         <>
           <label>
-            Enlace CSV publicado
-            <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://docs.google.com/…/pub?output=csv" />
+            Enlace de la hoja (abre la pestaña y copia la URL)
+            <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://docs.google.com/spreadsheets/d/…/edit?gid=…" />
           </label>
           <div className="grid">
             <label>Celda saldo<input value={balanceCell} onChange={(e) => setBalanceCell(e.target.value)} /></label>

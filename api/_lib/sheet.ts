@@ -48,12 +48,24 @@ export function parseEuro(raw: string): number {
   return Math.round(n * 100) / 100
 }
 
+/**
+ * Acepta el enlace normal de la hoja (…/edit?gid=123#gid=123) y lo convierte
+ * en el de exportación CSV de esa pestaña. Requiere hoja compartida "cualquiera con el enlace".
+ * Los enlaces ya publicados (…/pub?output=csv) se dejan tal cual.
+ */
+export function toCsvUrl(url: string): string {
+  const m = /docs\.google\.com\/spreadsheets\/d\/([\w-]+)\/(?:edit|view|htmlview)/.exec(url)
+  if (!m) return url
+  const gid = /[#?&]gid=(\d+)/.exec(url)?.[1] ?? '0'
+  return `https://docs.google.com/spreadsheets/d/${m[1]}/export?format=csv&gid=${gid}`
+}
+
 export async function readSheetCells(
   csvUrl: string,
   balanceCell: string,
   pnlCell: string,
 ): Promise<{ balance: number; pnl: number | null }> {
-  const res = await fetch(csvUrl, { cache: 'no-store' })
+  const res = await fetch(toCsvUrl(csvUrl), { cache: 'no-store' })
   if (!res.ok) throw new Error(`Google Sheets respondió ${res.status}`)
   const rows = parseCsv(await res.text())
 
