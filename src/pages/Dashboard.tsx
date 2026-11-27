@@ -1,11 +1,31 @@
-import { useCallback, useEffect, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
+import { CategoryBars } from '../components/CategoryBars'
 import { Link } from 'react-router-dom'
-import { eur, generateMonth, getDashboard, listWallets, syncSheet } from '../lib/api'
+import {
+  eur, firstOfMonth, generateMonth, getCategoryTotals, getDashboard, getMonthTotals, getNetWorthHistory,
+  listUpcoming, listWallets, syncSheet, type CategoryTotal, type MonthTotal, type NetWorthPoint,
+} from '../lib/api'
 import { supabase } from '../lib/supabase'
-import type { Dashboard as D } from '../types/db'
+import type { Dashboard as D, Transaction } from '../types/db'
+// Recharts pesa ~400 kB: se descarga aparte para no retrasar las tarjetas
+const IncomeExpenseChart = lazy(() => import('../components/Charts').then((m) => ({ default: m.IncomeExpenseChart })))
+const NetWorthChart = lazy(() => import('../components/Charts').then((m) => ({ default: m.NetWorthChart })))
+
+type ChartsData = { cats: CategoryTotal[]; months: MonthTotal[]; worth: NetWorthPoint[]; upcoming: Transaction[] }
+
+const pad = (n: number) => String(n).padStart(2, '0')
+const todayIso = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` }
+const dueLabel = (iso: string | null, today: string) => {
+  if (!iso) return ''
+  if (iso < today) return 'Vencido'
+  if (iso === today) return 'Hoy'
+  const [y, m, d] = iso.split('-').map(Number)
+  return new Date(y, m - 1, d).toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric' })
+}
 
 export default function Dashboard() {
   const [d, setD] = useState<D | null>(null)
+  const [charts, setCharts] = useState<ChartsData | null>(null)
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
 
@@ -16,6 +36,13 @@ export default function Dashboard() {
       const [dash, wallets] = await Promise.all([getDashboard(), listWallets()])
       setD(dash)
       setHasWallets(wallets.some((w) => !w.archived))
+    } catch (e) { setErr((e as Error).message) }
+    // los gráficos no bloquean las tarjetas
+    try {
+      const [cats, months, worth, upcoming] = await Promise.all([
+        getCategoryTotals(firstOfMonth()), getMonthTotals(6), getNetWorthHistory(12), listUpcoming(7),
+      ])
+      setCharts({ cats, months, worth, upcoming })
     } catch (e) { setErr((e as Error).message) }
   }, [])
 
@@ -66,6 +93,60 @@ export default function Dashboard() {
           <strong className={(d.poker_pnl ?? 0) >= 0 ? 'pos' : 'neg'}>{eur(d.poker_pnl)}</strong>
         </div>
       </div>
+
+      {charts && (
+        <>
+          {/* F9-06 próximas obligaciones */}
+          <section className="panel">
+            <header className="row">
+              <h3>Próximos 7 días</h3>
+              <Link className="link" to="/movimientos">Ver todo</Link>
+            </header>
+            {charts.upcoming.length === 0 ? (
+              <p className="msg">Nada pendiente de pagar esta semana.</p>
+            ) : (
+              <ul className="upcoming">
+                {charts.upcoming.map((t) => {
+                  const label = dueLabel(t.due_date, todayIso())
+                  return (
+                    <li key={t.id} className="row">
+                      <span>
+                        <span className={`due${label === 'Vencido' ? ' late' : ''}`}>{label}</span>
+                        {t.name}
+                      </span>
+                      <strong>{eur(t.amount)}</strong>
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
+          </section>
+
+          <div className="panels">
+            {/* F9-03 */}
+            <section className="panel">
+              <h3>Gasto por categoría · {new Date().toLocaleDateString('es-ES', { month: 'long' })}</h3>
+              <CategoryBars rows={charts.cats} />
+            </section>
+
+            {/* F9-05 */}
+            <section className="panel">
+              <h3>Ingresos vs gastos · 6 meses</h3>
+              <Suspense fallback={<div className="chart-loading" />}>
+                <IncomeExpenseChart data={charts.months} />
+              </Suspense>
+            </section>
+          </div>
+
+          {/* F9-04 */}
+          <section className="panel">
+            <h3>Patrimonio · 12 meses</h3>
+            <Suspense fallback={<div className="chart-loading" />}>
+              <NetWorthChart data={charts.worth} />
+            </Suspense>
+          </section>
+        </>
+      )}
 
       {err && <p className="msg">{err}</p>}
       <button className="link" onClick={() => supabase.auth.signOut()}>Cerrar sesión</button>

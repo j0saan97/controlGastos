@@ -14,7 +14,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 | F6 | Categorías | ✅ Hecho |
 | F7 | Fijos | ✅ Hecho |
 | F8 | Movimientos del mes | ✅ Hecho (pendiente probar en real) |
-| F9 | Dashboard y gráficos | 🟡 |
+| F9 | Dashboard y gráficos | ✅ Hecho (ejecutar `05_net_worth_groups.sql`) |
 | F10 | Pulido y pruebas | ⬜ |
 | F11 | Futuro / ideas | ⬜ |
 
@@ -114,11 +114,11 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 
 ## F9 · Dashboard y gráficos
 - [x] **F9-01** Tarjetas: disponible real, total, pendientes, poker hoy
-- [ ] **F9-02** Elegir librería de gráficos (Recharts)
-- [ ] **F9-03** Gráfico gasto por categoría (mes)
-- [ ] **F9-04** Evolución patrimonio (12 meses)
-- [ ] **F9-05** Ingresos vs gastos por mes
-- [ ] **F9-06** Próximas obligaciones (7 días)
+- [x] **F9-02** Elegir librería de gráficos (Recharts)
+- [x] **F9-03** Gráfico gasto por categoría (mes)
+- [x] **F9-04** Evolución patrimonio (12 meses)
+- [x] **F9-05** Ingresos vs gastos por mes
+- [x] **F9-06** Próximas obligaciones (7 días)
 
 ## F10 · Pulido y pruebas
 - [ ] **F10-01** Toasts de éxito / error

@@ -84,6 +84,53 @@ export async function syncSheet() {
   return res.json()
 }
 
+// ---------- Gráficos (F9) ----------
+
+export type CategoryTotal = { category: string; color: string | null; total: number; paid: number }
+export type MonthTotal = { month: string; income: number; expense: number }
+export type NetWorthPoint = { month: string; total: number }
+
+/** Gasto (o ingreso) por categoría en un mes, de mayor a menor */
+export async function getCategoryTotals(month: string, kind: Kind = 'expense'): Promise<CategoryTotal[]> {
+  const { data, error } = await supabase
+    .from('v_category_totals').select('category, color, total, paid').eq('month', month).eq('kind', kind)
+  if (error) throw error
+  return (data as CategoryTotal[])
+    .map((r) => ({ ...r, total: Number(r.total), paid: Number(r.paid) }))
+    .sort((a, b) => b.total - a.total)
+}
+
+/** Ingresos y gastos de los últimos n meses (incluido el actual); meses sin datos = 0 */
+export async function getMonthTotals(n = 6): Promise<MonthTotal[]> {
+  const now = new Date()
+  const months = Array.from({ length: n }, (_, i) => firstOfMonth(new Date(now.getFullYear(), now.getMonth() - (n - 1) + i, 1)))
+  const { data, error } = await supabase
+    .from('v_month_totals').select('month, income, expense').gte('month', months[0]).lte('month', months[n - 1])
+  if (error) throw error
+  const byMonth = new Map((data as MonthTotal[]).map((r) => [r.month, r]))
+  return months.map((m) => ({ month: m, income: Number(byMonth.get(m)?.income ?? 0), expense: Number(byMonth.get(m)?.expense ?? 0) }))
+}
+
+/** Patrimonio a fin de cada mes (foto diaria de saldos) */
+export async function getNetWorthHistory(months = 12): Promise<NetWorthPoint[]> {
+  const { data, error } = await supabase.rpc('get_net_worth_history', { p_months: months })
+  if (error) throw error
+  return (data as NetWorthPoint[]).map((r) => ({ month: r.month, total: Number(r.total) }))
+}
+
+/** Gastos pendientes que vencen en los próximos `days` días (y los ya vencidos) */
+export async function listUpcoming(days = 7): Promise<Transaction[]> {
+  const limit = new Date()
+  limit.setDate(limit.getDate() + days)
+  const iso = `${limit.getFullYear()}-${String(limit.getMonth() + 1).padStart(2, '0')}-${String(limit.getDate()).padStart(2, '0')}`
+  const { data, error } = await supabase
+    .from('transactions').select(TX_COLS)
+    .eq('status', 'pending').eq('kind', 'expense').lte('due_date', iso)
+    .order('due_date')
+  if (error) throw error
+  return (data as Transaction[]).map((t) => ({ ...t, amount: Number(t.amount) }))
+}
+
 // ---------- Movimientos del mes ----------
 
 export type TxInput = Pick<Transaction, 'month' | 'name' | 'kind' | 'category_id' | 'amount' | 'due_date' | 'note'>
