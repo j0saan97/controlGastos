@@ -52,7 +52,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F2-02** vite-plugin-pwa con manifest
 - [x] **F2-03** `vercel.json` (SPA rewrites)
 - [x] **F2-04** `.env.example`
-- [ ] **F2-05** Iconos `icon-192.png` y `icon-512.png`
+- [x] **F2-05** Iconos `icon-192.png` y `icon-512.png` (+ `icon.svg` favicon, `apple-touch-icon.png`, maskable)
 - [x] **F2-06** Repo GitHub (`j0saan97/controlGastos`, rama de trabajo `dev`)
 - [x] **F2-07** Proyecto Vercel + variables de entorno
 - [x] **F2-08** Primer deploy → https://control-gastos-six-mu.vercel.app

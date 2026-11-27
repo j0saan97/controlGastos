@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Fondo a sangre (sirve como icono "maskable": el dibujo queda dentro del 70% central) -->
+  <rect width="512" height="512" fill="#0f1115"/>
+  <!-- Cartera -->
+  <rect x="116" y="170" width="280" height="200" rx="34" fill="#4f8cff"/>
+  <path d="M150 170 L310 124 Q330 118 336 138 L346 170 Z" fill="#3a6fd6"/>
+  <rect x="300" y="236" width="96" height="68" rx="20" fill="#1a1d24"/>
+  <circle cx="334" cy="270" r="12" fill="#3ecf8e"/>
+  <!-- Flecha de subida -->
+  <path d="M150 330 L200 280 L230 308 L268 268" fill="none" stroke="#e8e8ea" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M238 262 L272 262 L272 296" fill="none" stroke="#e8e8ea" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
