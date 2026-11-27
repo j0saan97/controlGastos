@@ -370,7 +370,7 @@ function TxForm({ tx, month, cats, payable, walletById, onDone }: TxFormProps) {
 
       <label>
         Nombre
-        <input value={name} onChange={(e) => setName(e.target.value)}
+        <input value={name} maxLength={50} onChange={(e) => setName(e.target.value)}
           placeholder={kind === 'expense' ? 'Supermercado' : 'Bizum de…'} autoFocus={!tx} />
       </label>
 
@@ -395,7 +395,7 @@ function TxForm({ tx, month, cats, payable, walletById, onDone }: TxFormProps) {
 
       <label>
         Nota (opcional)
-        <input value={note} onChange={(e) => setNote(e.target.value)} />
+        <input value={note} maxLength={200} onChange={(e) => setNote(e.target.value)} />
       </label>
 
       {!tx && payable.length > 0 && (

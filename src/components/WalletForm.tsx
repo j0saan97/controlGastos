@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { errorText } from '../lib/errors'
 import { createWallet, deleteWallet, syncSheet, updateWallet, type WalletInput } from '../lib/api'
 import type { Wallet } from '../types/db'
+import { parseAmount } from '../lib/amount'
 
 export const WALLET_TYPES: Record<Wallet['type'], string> = {
   bank: 'Banco',
@@ -12,12 +13,8 @@ export const WALLET_TYPES: Record<Wallet['type'], string> = {
 
 const CELL = /^[A-Z]{1,3}[0-9]{1,5}$/
 
-/** "1.234,56" · "1234,56" · "1234.56" → 1234.56 */
-export function parseAmount(s: string): number {
-  const t = s.trim().replace(/\s|€/g, '')
-  const normalized = t.includes(',') ? t.replace(/\./g, '').replace(',', '.') : t
-  return normalized === '' ? NaN : Number(normalized)
-}
+// parseAmount vive en lib/amount (sin dependencias, se puede testear); se reexporta aquí
+export { parseAmount }
 
 type Props = {
   wallet?: Wallet
@@ -89,7 +86,7 @@ export default function WalletForm({ wallet, parentOptions = [], isParent = fals
     <form className="form" onSubmit={submit}>
       <label>
         Nombre
-        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Banco principal" autoFocus={!editing} />
+        <input value={name} maxLength={50} onChange={(e) => setName(e.target.value)} placeholder="Banco principal" autoFocus={!editing} />
       </label>
 
       <label>

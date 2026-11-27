@@ -15,7 +15,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 | F7 | Fijos | ✅ Hecho |
 | F8 | Movimientos del mes | ✅ Hecho (pendiente probar en real) |
 | F9 | Dashboard y gráficos | ✅ Hecho (ejecutar `05_net_worth_groups.sql`) |
-| F10 | Pulido y pruebas | ⬜ |
+| F10 | Pulido y pruebas | 🟡 En curso |
 | F11 | Futuro / ideas | ⬜ |
 
 ---
@@ -122,7 +122,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 ## F10 · Pulido y pruebas
 - [x] **F10-01** Toasts de éxito / error
 - [x] **F10-02** Estados de carga y vacío
-- [ ] **F10-03** Validación de formularios
+- [x] **F10-03** Validación de formularios
 - [x] **F10-04** Pantalla offline (sin conexión)
 - [ ] **F10-05** Tests unitarios parser (`vitest`)
 - [ ] **F10-06** Prueba con 2 usuarios reales (RLS)

@@ -181,7 +181,7 @@ function RecurringForm({ item, cats, onDone }: FormProps) {
 
       <label>
         Nombre
-        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Hipoteca" autoFocus={!item} />
+        <input value={name} maxLength={50} onChange={(e) => setName(e.target.value)} placeholder="Hipoteca" autoFocus={!item} />
       </label>
 
       <label>
