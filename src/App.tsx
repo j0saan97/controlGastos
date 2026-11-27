@@ -5,7 +5,7 @@ import { supabase } from './lib/supabase'
 import Layout from './components/Layout'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
-import Placeholder from './pages/Placeholder'
+import Movements from './pages/Movements'
 import Wallets from './pages/Wallets'
 import Categories from './pages/Categories'
 import Recurring from './pages/Recurring'
@@ -26,7 +26,7 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Dashboard />} />
-        <Route path="movimientos" element={<Placeholder title="Movimientos" />} />
+        <Route path="movimientos" element={<Movements />} />
         <Route path="carteras" element={<Wallets />} />
         <Route path="fijos" element={<Recurring />} />
         <Route path="categorias" element={<Categories />} />

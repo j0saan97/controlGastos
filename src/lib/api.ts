@@ -1,5 +1,5 @@
 import { supabase } from './supabase'
-import type { Category, Dashboard, Kind, RecurringItem, Wallet } from '../types/db'
+import type { Category, Dashboard, Kind, RecurringItem, Transaction, Wallet } from '../types/db'
 
 // ---------- Fijos (plantillas) ----------
 
@@ -82,6 +82,48 @@ export async function syncSheet() {
   })
   if (!res.ok) throw new Error(`Sync falló (${res.status})`)
   return res.json()
+}
+
+// ---------- Movimientos del mes ----------
+
+export type TxInput = Pick<Transaction, 'month' | 'name' | 'kind' | 'category_id' | 'amount' | 'due_date' | 'note'>
+
+const TX_COLS = 'id, month, name, kind, category_id, amount, is_fixed, recurring_id, due_date, status, wallet_id, paid_at, note'
+
+export async function listTransactions(month: string): Promise<Transaction[]> {
+  const { data, error } = await supabase.from('transactions').select(TX_COLS).eq('month', month)
+  if (error) throw error
+  return (data as Transaction[]).map((t) => ({ ...t, amount: Number(t.amount) }))
+}
+
+/** Crea un movimiento variable; si viene walletId se crea ya pagado (el trigger mueve el saldo) */
+export async function createTransaction(t: TxInput, walletId?: string) {
+  const paid = walletId ? { status: 'paid', wallet_id: walletId, paid_at: new Date().toISOString() } : {}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error } = await supabase.from('transactions').insert({ ...t, ...paid } as any)
+  if (error) throw error
+}
+
+/** Editar un pagado también vale: el trigger revierte el importe viejo y aplica el nuevo */
+export async function updateTransaction(id: string, patch: Partial<TxInput>) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error } = await supabase.from('transactions').update(patch as any).eq('id', id)
+  if (error) throw error
+}
+
+/** Si estaba pagado, el trigger devuelve el dinero a la cartera */
+export async function deleteTransaction(id: string) {
+  const { error } = await supabase.from('transactions').delete().eq('id', id)
+  if (error) throw error
+}
+
+/** Pagar/cobrar con el importe final (p. ej. la luz que varía cada mes) */
+export async function payTransaction(id: string, walletId: string, amount: number) {
+  const { error } = await supabase
+    .from('transactions')
+    .update({ amount, status: 'paid', wallet_id: walletId, paid_at: new Date().toISOString() })
+    .eq('id', id)
+  if (error) throw error
 }
 
 /** Marca un movimiento como pagado/cobrado desde una cartera */

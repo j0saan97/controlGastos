@@ -83,6 +83,24 @@ strong.with-dot { display: flex; align-items: center; gap: 8px; }
 .segmented button { flex: 1; background: none; color: var(--muted); }
 .segmented button.on { background: #2a2e37; color: var(--text); font-weight: 600; }
 
+/* Movimientos */
+.month-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; }
+.month-nav strong { font-size: 17px; text-transform: capitalize; }
+.month-nav button { width: 48px; height: 44px; font-size: 22px; padding: 0; }
+.filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+.tx-row { display: flex; gap: 8px; align-items: stretch; }
+.tx-row .list-item { flex: 1; min-width: 0; }
+.tick { width: 52px; flex-shrink: 0; border-radius: 14px; background: var(--card); color: var(--pos); font-size: 22px; padding: 0; }
+.tick.undo { color: var(--muted); }
+.list.paid .list-item { opacity: .65; }
+.wallet-pick { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.wallet-pick legend { font-size: 13px; color: var(--muted); margin-bottom: 6px; padding: 0; }
+.form .wallet-pick label { flex-direction: row; align-items: center; gap: 10px; background: var(--card); color: var(--text);
+  font-size: 15px; padding: 12px 14px; border-radius: 12px; border: 2px solid transparent; }
+.form .wallet-pick label.on { border-color: var(--accent); }
+.wallet-pick input { width: 18px; height: 18px; margin: 0; }
+.wallet-pick .bal { margin-left: auto; color: var(--muted); }
+
 /* Bienvenida */
 .welcome { display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin-top: 10vh; }
 .welcome p { color: var(--muted); line-height: 1.5; margin: 0; }

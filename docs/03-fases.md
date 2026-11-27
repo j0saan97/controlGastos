@@ -13,7 +13,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 | F5 | Carteras | ✅ Hecho (sync Poker se prueba en F3) |
 | F6 | Categorías | ✅ Hecho |
 | F7 | Fijos | ✅ Hecho |
-| F8 | Movimientos del mes | ⬜ |
+| F8 | Movimientos del mes | ✅ Hecho (pendiente probar en real) |
 | F9 | Dashboard y gráficos | 🟡 |
 | F10 | Pulido y pruebas | ⬜ |
 | F11 | Futuro / ideas | ⬜ |
@@ -102,15 +102,15 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F7-05** Generar automáticamente al abrir un mes nuevo
 
 ## F8 · Movimientos del mes
-- [ ] **F8-01** Selector de mes (‹ noviembre 2026 ›)
-- [ ] **F8-02** Listado: pendientes arriba, pagados abajo
-- [ ] **F8-03** Crear movimiento variable (gasto / ingreso)
-- [ ] **F8-04** Editar importe y datos
-- [ ] **F8-05** Eliminar
-- [ ] **F8-06** Marcar pagado → modal elegir cartera
-- [ ] **F8-07** Desmarcar (vuelve a pendiente)
-- [ ] **F8-08** Filtros: tipo, categoría, fijo / variable, estado
-- [ ] **F8-09** Totales del mes en cabecera
+- [x] **F8-01** Selector de mes (‹ noviembre 2026 ›)
+- [x] **F8-02** Listado: pendientes arriba, pagados abajo
+- [x] **F8-03** Crear movimiento variable (gasto / ingreso)
+- [x] **F8-04** Editar importe y datos
+- [x] **F8-05** Eliminar
+- [x] **F8-06** Marcar pagado → modal elegir cartera
+- [x] **F8-07** Desmarcar (vuelve a pendiente)
+- [x] **F8-08** Filtros: tipo, categoría, fijo / variable, estado
+- [x] **F8-09** Totales del mes en cabecera
 
 ## F9 · Dashboard y gráficos
 - [x] **F9-01** Tarjetas: disponible real, total, pendientes, poker hoy
