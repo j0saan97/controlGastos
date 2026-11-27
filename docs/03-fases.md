@@ -57,7 +57,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F2-07** Proyecto Vercel + variables de entorno
 - [x] **F2-08** Primer deploy → https://control-gastos-six-mu.vercel.app
 - [x] **F2-09** Instalar PWA en el móvil y comprobar
-- [ ] **F2-10** Comprobar contraseñas de `SECRETOS.md` (local, no se sube) contra Supabase/Vercel, rellenar contraseña de la BD y rotar la secret key expuesta en capturas
+- [x] **F2-10** Comprobar contraseñas de `SECRETOS.md` (local, no se sube) contra Supabase/Vercel, rellenar contraseña de la BD y ~~rotar la secret key expuesta en capturas~~ → decidido no rotar, ver `06-decisiones.md` D15
 
 ## F3 · Sync Google Sheet + cron
 - [x] **F3-01** Parser CSV + celdas + formato "1.234,56 €"
