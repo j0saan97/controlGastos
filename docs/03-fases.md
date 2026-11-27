@@ -120,14 +120,14 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F9-06** Próximas obligaciones (7 días)
 
 ## F10 · Pulido y pruebas
-- [x] **F10-01** Toasts de éxito / error
-- [x] **F10-02** Estados de carga y vacío
-- [x] **F10-03** Validación de formularios
-- [x] **F10-04** Pantalla offline (sin conexión)
+- [x] ~~**F10-01** Toasts de éxito / error~~
+- [x] ~~**F10-02** Estados de carga y vacío~~
+- [x] ~~**F10-03** Validación de formularios~~
+- [x] ~~**F10-04** Pantalla offline (sin conexión)~~
 - [ ] **F10-05** Tests unitarios parser (`vitest`)
 - [ ] **F10-06** Prueba con 2 usuarios reales (RLS)
 - [ ] **F10-07** Revisar accesibilidad y tamaño táctil
-- [x] **F10-08** Botón 👁 ocultar/mostrar saldos: importes como `••••` en Resumen y Carteras; recuerda la elección (localStorage)
+- [x] ~~**F10-08** Botón 👁 ocultar/mostrar saldos: importes como `••••` en Resumen y Carteras; recuerda la elección (localStorage)~~
 
 ## F11 · Futuro / ideas
 - [ ] **F11-01** Google Sheets por OAuth (privado)
