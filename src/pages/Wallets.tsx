@@ -114,7 +114,7 @@ export default function Wallets() {
     )
   }
 
-  const editingWallet = editing !== 'new' ? editing : undefined
+  const editingWallet = editing !== null && editing !== 'new' ? editing : undefined
   const editingIsParent = editingWallet ? isGroup(editingWallet) : false
 
   return (
