@@ -124,7 +124,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] ~~**F10-02** Estados de carga y vacío~~
 - [x] ~~**F10-03** Validación de formularios~~
 - [x] ~~**F10-04** Pantalla offline (sin conexión)~~
-- [ ] **F10-05** Tests unitarios parser (`vitest`)
+- [x] ~~**F10-05** Tests unitarios parser (`vitest`)~~ → `npm test` (42 tests: importes + lectura del Excel)
 - [ ] **F10-06** Prueba con 2 usuarios reales (RLS)
 - [ ] **F10-07** Revisar accesibilidad y tamaño táctil
 - [x] ~~**F10-08** Botón 👁 ocultar/mostrar saldos: importes como `••••` en Resumen y Carteras; recuerda la elección (localStorage)~~
