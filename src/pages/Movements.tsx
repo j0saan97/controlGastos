@@ -5,6 +5,7 @@ import {
 } from '../lib/api'
 import type { Category, Kind, Transaction, Wallet } from '../types/db'
 import Modal from '../components/Modal'
+import { toast } from '../lib/toast'
 import { useHidden } from '../lib/privacy'
 import { parseAmount } from '../components/WalletForm'
 
@@ -53,10 +54,10 @@ export default function Movements() {
   useEffect(() => { setTxs(null); load(month) }, [month, load])
 
   const close = useCallback(() => { setEditing(null); setPaying(null) }, [])
-  const done = () => { close(); load(month) }
+  const done = (msg = 'Cambios guardados') => { close(); load(month); toast(msg) }
 
   async function undo(t: Transaction) {
-    try { await markPending(t.id); load(month) } catch (e) { setErr((e as Error).message) }
+    try { await markPending(t.id); load(month); toast('Vuelto a pendiente') } catch (e) { toast((e as Error).message, 'error') }
   }
 
   const catById = new Map(cats.map((c) => [c.id, c]))
@@ -206,13 +207,13 @@ export default function Movements() {
       {editing && (
         <Modal title={editing === 'new' ? 'Nuevo movimiento' : editing.name} onClose={close}>
           <TxForm tx={editing === 'new' ? undefined : editing} month={month} cats={cats}
-            payable={payable} walletById={walletById} onDone={done} />
+            payable={payable} walletById={walletById} onDone={() => done()} />
         </Modal>
       )}
 
       {paying && (
         <Modal title={`${paying.kind === 'income' ? 'Cobrar' : 'Pagar'} ${paying.name}`} onClose={close}>
-          <PayForm tx={paying} payable={payable} onDone={done} />
+          <PayForm tx={paying} payable={payable} onDone={() => done(paying.kind === 'income' ? 'Cobrado' : 'Pagado')} />
         </Modal>
       )}
     </section>

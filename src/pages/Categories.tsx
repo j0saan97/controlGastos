@@ -4,6 +4,7 @@ import {
 } from '../lib/api'
 import type { Category, Kind } from '../types/db'
 import Modal from '../components/Modal'
+import { toast } from '../lib/toast'
 
 const COLORS = ['#4f8cff', '#3ecf8e', '#ff6b6b', '#f5a524', '#a970ff', '#ff7ac6', '#2ec4d6', '#c0c4cc', '#8b5a2b', '#e4e45c']
 
@@ -93,7 +94,7 @@ export default function Categories() {
           title={editing.category ? editing.category.name : `Nueva categoría de ${KIND_LABEL[editing.kind].toLowerCase()}`}
           onClose={close}
         >
-          <CategoryForm {...editing} onDone={() => { close(); load() }} />
+          <CategoryForm {...editing} onDone={() => { close(); load(); toast('Cambios guardados') }} />
         </Modal>
       )}
     </section>

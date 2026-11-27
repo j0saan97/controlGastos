@@ -125,6 +125,16 @@ a.link { color: var(--accent); text-decoration: none; font-size: 14px; }
 .upcoming .due { display: inline-block; min-width: 64px; color: var(--muted); font-size: 13px; text-transform: capitalize; }
 .upcoming .due.late { color: var(--neg); font-weight: 600; }
 
+/* Avisos (F10-01) */
+.toaster { position: fixed; left: 0; right: 0; bottom: calc(76px + env(safe-area-inset-bottom)); z-index: 20;
+  display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; padding: 0 16px; }
+.toast { background: #2a2e37; color: var(--text); padding: 10px 16px; border-radius: 12px; font-size: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.4); max-width: 420px; animation: toast-in .18s ease-out; }
+.toast.ok { border-left: 4px solid var(--pos); }
+.toast.error { border-left: 4px solid var(--neg); }
+@keyframes toast-in { from { opacity: 0; transform: translateY(8px); } }
+@media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
+
 /* Bienvenida */
 .welcome { display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin-top: 10vh; }
 .welcome p { color: var(--muted); line-height: 1.5; margin: 0; }

@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { eur, listWallets } from '../lib/api'
 import type { Wallet } from '../types/db'
 import Modal from '../components/Modal'
+import { toast } from '../lib/toast'
 import { useHidden } from '../lib/privacy'
 import WalletForm, { WALLET_TYPES } from '../components/WalletForm'
 
@@ -31,7 +32,7 @@ export default function Wallets() {
     if (params.has('nueva')) setParams({}, { replace: true })
   }, [params, setParams])
 
-  function done() { close(); load() }
+  function done() { close(); load(); toast('Cambios guardados') }
 
   if (!wallets) return <p>{err || 'Cargando…'}</p>
 

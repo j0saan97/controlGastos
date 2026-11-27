@@ -5,6 +5,7 @@ import {
 } from '../lib/api'
 import type { Category, Kind, RecurringItem } from '../types/db'
 import Modal from '../components/Modal'
+import { toast } from '../lib/toast'
 import { useHidden } from '../lib/privacy'
 import { parseAmount } from '../components/WalletForm'
 
@@ -106,7 +107,7 @@ export default function Recurring() {
 
       {editing && (
         <Modal title={editing === 'new' ? 'Nuevo fijo' : editing.name} onClose={close}>
-          <RecurringForm item={editing === 'new' ? undefined : editing} cats={cats} onDone={() => { close(); load() }} />
+          <RecurringForm item={editing === 'new' ? undefined : editing} cats={cats} onDone={() => { close(); load(); toast('Cambios guardados') }} />
         </Modal>
       )}
     </section>

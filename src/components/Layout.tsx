@@ -1,5 +1,16 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { toggleHidden, useHidden } from '../lib/privacy'
+import { useToasts } from '../lib/toast'
+
+/** F10-01: avisos flotantes encima de la barra de pestañas */
+function Toaster() {
+  const toasts = useToasts()
+  return (
+    <div className="toaster" role="status" aria-live="polite">
+      {toasts.map((t) => <div key={t.id} className={`toast ${t.kind}`}>{t.kind === 'ok' ? '✓ ' : '⚠ '}{t.text}</div>)}
+    </div>
+  )
+}
 
 const tabs = [
   { to: '/', label: 'Inicio' },
@@ -43,6 +54,7 @@ export default function Layout() {
       <main className="content">
         <Outlet />
       </main>
+      <Toaster />
     </div>
   )
 }
