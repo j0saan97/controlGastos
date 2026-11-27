@@ -7,9 +7,9 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 |------|--------|--------|
 | F0 | Requisitos y diseño | ✅ Hecho |
 | F1 | Base de datos | ✅ Hecho |
-| F2 | Proyecto base y PWA | 🟡 Desplegado. Faltan iconos, instalar en móvil, revisar claves |
-| F3 | Sync Google Sheet + cron | 🟡 Falta probar en real |
-| F4 | Auth y layout | 🟡 Faltan recuperar contraseña y emails |
+| F2 | Proyecto base y PWA | ✅ Hecho |
+| F3 | Sync Google Sheet + cron | 🟡 Falta verificar el cron de las 03:00 |
+| F4 | Auth y layout | ✅ Hecho |
 | F5 | Carteras | ✅ Hecho (sync Poker se prueba en F3) |
 | F6 | Categorías | ✅ Hecho |
 | F7 | Fijos | ✅ Hecho |
@@ -75,8 +75,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F4-01** Login / registro email + contraseña
 - [x] **F4-02** Tab bar inferior móvil
 - [x] **F4-03** Cerrar sesión
-- [ ] **F4-04** Recuperar contraseña
-- [ ] **F4-05** Configurar emails de Supabase en español
+- [x] **F4-04** Recuperar contraseña (email con enlace → pantalla "Nueva contraseña")
 - [x] **F4-06** Pantalla de bienvenida (sin carteras → crear la primera)
 - [x] **F4-07** Layout responsive: ≥ 900px menú lateral, contenido máx. 960px, dashboard 4 columnas
 
