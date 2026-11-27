@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { errorText } from '../lib/errors'
 import { createWallet, deleteWallet, syncSheet, updateWallet, type WalletInput } from '../lib/api'
 import type { Wallet } from '../types/db'
 
@@ -48,7 +49,7 @@ export default function WalletForm({ wallet, parentOptions = [], isParent = fals
 
   async function run(action: () => Promise<unknown>) {
     setBusy(true); setErr('')
-    try { await action(); onDone() } catch (e) { setErr((e as Error).message) }
+    try { await action(); onDone() } catch (e) { setErr(errorText(e)) }
     setBusy(false)
   }
 

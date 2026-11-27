@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
+import { errorText } from '../lib/errors'
 import {
   createCategories, deleteCategory, listCategories, updateCategory, type CategoryInput,
 } from '../lib/api'
@@ -31,7 +32,7 @@ export default function Categories() {
   const [editing, setEditing] = useState<Editing | null>(null)
 
   const load = useCallback(async () => {
-    try { setCats(await listCategories()) } catch (e) { setErr((e as Error).message) }
+    try { setCats(await listCategories()) } catch (e) { setErr(errorText(e)) }
   }, [])
 
   useEffect(() => { load() }, [load])
@@ -40,7 +41,7 @@ export default function Categories() {
 
   async function addSuggested() {
     setErr('')
-    try { await createCategories(SUGGESTED); await load() } catch (e) { setErr((e as Error).message) }
+    try { await createCategories(SUGGESTED); await load() } catch (e) { setErr(errorText(e)) }
   }
 
   if (!cats) return <p>{err || 'Cargando…'}</p>
@@ -109,7 +110,7 @@ function CategoryForm({ category, kind, onDone }: Editing & { onDone: () => void
 
   async function run(action: () => Promise<unknown>) {
     setBusy(true); setErr('')
-    try { await action(); onDone() } catch (e) { setErr((e as Error).message) }
+    try { await action(); onDone() } catch (e) { setErr(errorText(e)) }
     setBusy(false)
   }
 

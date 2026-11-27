@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
+import { errorText } from '../lib/errors'
 import {
   createRecurring, deleteRecurring, eur, generateMonth, listCategories, listRecurring, updateRecurring,
   type RecurringInput,
@@ -24,7 +25,7 @@ export default function Recurring() {
     try {
       const [r, c] = await Promise.all([listRecurring(), listCategories()])
       setItems(r); setCats(c)
-    } catch (e) { setErr((e as Error).message) }
+    } catch (e) { setErr(errorText(e)) }
   }, [])
 
   useEffect(() => { load() }, [load])
@@ -36,7 +37,7 @@ export default function Recurring() {
     try {
       const n = await generateMonth()
       setInfo(n === 0 ? `Los fijos de ${monthName} ya estaban generados.` : `Añadidos ${n} fijos a ${monthName}.`)
-    } catch (e) { setErr((e as Error).message) }
+    } catch (e) { setErr(errorText(e)) }
     setBusy(false)
   }
 
@@ -130,7 +131,7 @@ function RecurringForm({ item, cats, onDone }: FormProps) {
 
   async function run(action: () => Promise<unknown>) {
     setBusy(true); setErr('')
-    try { await action(); onDone() } catch (e) { setErr((e as Error).message) }
+    try { await action(); onDone() } catch (e) { setErr(errorText(e)) }
     setBusy(false)
   }
 

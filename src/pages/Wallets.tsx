@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { errorText } from '../lib/errors'
 import { useSearchParams } from 'react-router-dom'
 import { eur, listWallets } from '../lib/api'
 import type { Wallet } from '../types/db'
@@ -21,7 +22,7 @@ export default function Wallets() {
   const [newParentId, setNewParentId] = useState<string | undefined>()
 
   const load = useCallback(async () => {
-    try { setWallets(await listWallets()) } catch (e) { setErr((e as Error).message) }
+    try { setWallets(await listWallets()) } catch (e) { setErr(errorText(e)) }
   }, [])
 
   useEffect(() => { load() }, [load])

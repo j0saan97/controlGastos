@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
+import { errorText } from '../lib/errors'
 import {
   createTransaction, deleteTransaction, eur, firstOfMonth, generateMonth, listCategories, listTransactions,
   listWallets, markPending, payTransaction, updateTransaction, type TxInput,
@@ -48,7 +49,7 @@ export default function Movements() {
       if (m >= firstOfMonth()) await generateMonth(m).catch(() => {})
       const [t, c, w] = await Promise.all([listTransactions(m), listCategories(), listWallets()])
       setTxs(t); setCats(c); setWallets(w)
-    } catch (e) { setErr((e as Error).message) }
+    } catch (e) { setErr(errorText(e)) }
   }, [])
 
   useEffect(() => { setTxs(null); load(month) }, [month, load])
@@ -57,7 +58,7 @@ export default function Movements() {
   const done = (msg = 'Cambios guardados') => { close(); load(month); toast(msg) }
 
   async function undo(t: Transaction) {
-    try { await markPending(t.id); load(month); toast('Vuelto a pendiente') } catch (e) { toast((e as Error).message, 'error') }
+    try { await markPending(t.id); load(month); toast('Vuelto a pendiente') } catch (e) { toast(errorText(e), 'error') }
   }
 
   const catById = new Map(cats.map((c) => [c.id, c]))
@@ -245,7 +246,7 @@ function PayForm({ tx, payable, onDone }: { tx: Transaction; payable: Wallet[]; 
       await payTransaction(tx.id, walletId, Math.round(a * 100) / 100)
       localStorage.setItem(LAST_WALLET, walletId)
       onDone()
-    } catch (e) { setErr((e as Error).message); setBusy(false) }
+    } catch (e) { setErr(errorText(e)); setBusy(false) }
   }
 
   if (payable.length === 0) {
@@ -307,7 +308,7 @@ function TxForm({ tx, month, cats, payable, walletById, onDone }: TxFormProps) {
 
   async function run(action: () => Promise<unknown>) {
     setBusy(true); setErr('')
-    try { await action(); onDone() } catch (e) { setErr((e as Error).message); setBusy(false) }
+    try { await action(); onDone() } catch (e) { setErr(errorText(e)); setBusy(false) }
   }
 
   function changeKind(k: Kind) {

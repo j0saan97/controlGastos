@@ -1,4 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
+import { errorText } from '../lib/errors'
 import { CategoryBars } from '../components/CategoryBars'
 import { Link } from 'react-router-dom'
 import {
@@ -38,14 +39,14 @@ export default function Dashboard() {
       const [dash, wallets] = await Promise.all([getDashboard(), listWallets()])
       setD(dash)
       setHasWallets(wallets.some((w) => !w.archived))
-    } catch (e) { setErr((e as Error).message) }
+    } catch (e) { setErr(errorText(e)) }
     // los gráficos no bloquean las tarjetas
     try {
       const [cats, months, worth, upcoming] = await Promise.all([
         getCategoryTotals(firstOfMonth()), getMonthTotals(6), getNetWorthHistory(12), listUpcoming(7),
       ])
       setCharts({ cats, months, worth, upcoming })
-    } catch (e) { setErr((e as Error).message) }
+    } catch (e) { setErr(errorText(e)) }
   }, [])
 
   // al abrir: lee el Sheet + genera los fijos del mes (F7-05, no duplica) y carga
@@ -55,7 +56,7 @@ export default function Dashboard() {
 
   async function refresh() {
     setBusy(true); setErr('')
-    try { await syncSheet(); await load() } catch (e) { setErr((e as Error).message) }
+    try { await syncSheet(); await load() } catch (e) { setErr(errorText(e)) }
     setBusy(false)
   }
 
