@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { cellToIndex, parseCsv, parseEuro, readSheetCells, toCsvUrl } from './sheet'
+import { cellToIndex, parseCsv, parseEuro, readSheetCells, toCsvUrl } from './sheet.js'
 
 describe('parseCsv', () => {
   it('separa filas y columnas', () => {
