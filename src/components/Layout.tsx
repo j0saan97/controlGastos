@@ -1,6 +1,8 @@
+import { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
+import { useOnline } from '../lib/online'
 import { toggleHidden, useHidden } from '../lib/privacy'
-import { useToasts } from '../lib/toast'
+import { toast, useToasts } from '../lib/toast'
 
 /** F10-01: avisos flotantes encima de la barra de pestañas */
 function Toaster() {
@@ -23,6 +25,19 @@ const tabs = [
 // Móvil: barra de pestañas abajo. Escritorio (≥ 900px): menú lateral.
 export default function Layout() {
   const hidden = useHidden()
+  const online = useOnline()
+  // F10-04: al volver la conexión, remontar la página para que recargue sus datos
+  const [epoch, setEpoch] = useState(0)
+  const wasOffline = useRef(!online)
+  useEffect(() => {
+    if (!online) { wasOffline.current = true; return }
+    if (wasOffline.current) {
+      wasOffline.current = false
+      setEpoch((e) => e + 1)
+      toast('Conexión recuperada')
+    }
+  }, [online])
+
   return (
     <div className="app">
       <nav className="tabbar">
@@ -52,7 +67,12 @@ export default function Layout() {
         </button>
       </nav>
       <main className="content">
-        <Outlet />
+        {!online && (
+          <div className="offline" role="alert">
+            <strong>Sin conexión.</strong> Los datos pueden no estar al día y no se pueden guardar cambios.
+          </div>
+        )}
+        <Outlet key={epoch} />
       </main>
       <Toaster />
     </div>

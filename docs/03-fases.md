@@ -123,7 +123,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F10-01** Toasts de éxito / error
 - [ ] **F10-02** Estados de carga y vacío
 - [ ] **F10-03** Validación de formularios
-- [ ] **F10-04** Pantalla offline (sin conexión)
+- [x] **F10-04** Pantalla offline (sin conexión)
 - [ ] **F10-05** Tests unitarios parser (`vitest`)
 - [ ] **F10-06** Prueba con 2 usuarios reales (RLS)
 - [ ] **F10-07** Revisar accesibilidad y tamaño táctil

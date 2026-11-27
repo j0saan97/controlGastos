@@ -4,6 +4,8 @@ import { supabase } from '../lib/supabase'
 /** Mensajes de Supabase Auth → español */
 export function authError(msg: string): string {
   const m = msg.toLowerCase()
+  if (!navigator.onLine || m.includes('failed to fetch') || m.includes('networkerror') || m.includes('load failed'))
+    return 'Sin conexión a internet'
   if (m.includes('invalid login credentials')) return 'Email o contraseña incorrectos'
   if (m.includes('email not confirmed')) return 'Confirma tu email antes de entrar (revisa tu correo)'
   if (m.includes('user already registered')) return 'Ya existe una cuenta con ese email'

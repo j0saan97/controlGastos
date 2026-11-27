@@ -125,6 +125,10 @@ a.link { color: var(--accent); text-decoration: none; font-size: 14px; }
 .upcoming .due { display: inline-block; min-width: 64px; color: var(--muted); font-size: 13px; text-transform: capitalize; }
 .upcoming .due.late { color: var(--neg); font-weight: 600; }
 
+/* Sin conexión (F10-04) */
+.offline { position: sticky; top: 0; z-index: 15; margin: -16px -16px 14px; padding: 10px 16px;
+  background: #3a2a12; color: #ffd28a; font-size: 14px; border-bottom: 1px solid #5a4218; }
+
 /* Avisos (F10-01) */
 .toaster { position: fixed; left: 0; right: 0; bottom: calc(76px + env(safe-area-inset-bottom)); z-index: 20;
   display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; padding: 0 16px; }
