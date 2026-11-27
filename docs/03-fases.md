@@ -65,10 +65,10 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [x] **F3-03** `POST /api/sync-sheet` (botón Refrescar)
 - [x] **F3-04** `GET /api/cron-sync` con `CRON_SECRET`
 - [x] **F3-05** `supabase/02_cron.sql` (pg_cron + pg_net + Vault)
-- [ ] **F3-06** Crear pestaña `app` en el Excel (A1 saldo, B1 P/L)
-- [ ] **F3-07** Publicar pestaña como CSV
+- [x] ~~**F3-06** Crear pestaña `app` en el Excel (A1 saldo, B1 P/L)~~ → sustituida: cada sala lee su celda de la hoja existente
+- [x] ~~**F3-07** Publicar pestaña como CSV~~ → sustituida: hoja compartida por enlace, la app convierte `edit?gid=` a CSV
 - [ ] **F3-08** Ejecutar `02_cron.sql` con URL y secreto reales
-- [ ] **F3-09** Probar `curl` a `/api/cron-sync`
+- [x] **F3-09** Probar `curl` a `/api/cron-sync` → 200 `{"synced":4}`; sin secreto → 401
 - [ ] **F3-10** Verificar ejecución a las 03:00 (`cron.job_run_details`)
 
 ## F4 · Auth y layout
