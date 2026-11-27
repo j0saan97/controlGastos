@@ -16,6 +16,9 @@ input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #2a2e
   padding: 8px 0 calc(8px + env(safe-area-inset-bottom)); border-top: 1px solid #2a2e37; }
 .tabbar a { flex: 1; text-align: center; color: var(--muted); text-decoration: none; font-size: 13px; padding: 6px 0; }
 .tabbar a.active { color: var(--accent); font-weight: 600; }
+.tabbar .eye { flex: 0 0 52px; background: none; color: var(--muted); padding: 0; display: flex;
+  align-items: center; justify-content: center; gap: 10px; }
+.tabbar .eye[aria-pressed="true"] { color: var(--accent); }
 
 .row { display: flex; justify-content: space-between; align-items: center; }
 .card { background: var(--card); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
@@ -140,6 +143,8 @@ a.link { color: var(--accent); text-decoration: none; font-size: 14px; }
   .tabbar a { flex: none; text-align: left; font-size: 15px; padding: 10px 12px; border-radius: 10px; }
   .tabbar a:hover { background: #22262f; color: var(--text); }
   .tabbar a.active { background: #22262f; }
+  .tabbar .eye { flex: none; justify-content: flex-start; font-size: 15px; padding: 10px 12px; border-radius: 10px; margin-top: auto; }
+  .tabbar .eye:hover { background: #22262f; color: var(--text); }
   .label-short { display: none; }
   .label-long { display: inline; }
 

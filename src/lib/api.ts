@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { isHidden, MASK } from './privacy'
 import type { Category, Dashboard, Kind, RecurringItem, Transaction, Wallet } from '../types/db'
 
 // ---------- Fijos (plantillas) ----------
@@ -61,8 +62,9 @@ export async function deleteCategory(id: string) {
   if (error) throw error
 }
 
+/** Importe en €; con el ojo activado (F10-08) devuelve "•••• €" */
 export const eur = (n: number | null | undefined) =>
-  (n ?? 0).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })
+  isHidden() ? MASK : (n ?? 0).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })
 
 export const firstOfMonth = (d = new Date()) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-01`

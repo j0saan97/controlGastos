@@ -5,11 +5,13 @@ import {
 } from '../lib/api'
 import type { Category, Kind, RecurringItem } from '../types/db'
 import Modal from '../components/Modal'
+import { useHidden } from '../lib/privacy'
 import { parseAmount } from '../components/WalletForm'
 
 const monthName = new Date().toLocaleDateString('es-ES', { month: 'long' })
 
 export default function Recurring() {
+  useHidden() // F10-08: repintar al pulsar 👁
   const [items, setItems] = useState<RecurringItem[] | null>(null)
   const [cats, setCats] = useState<Category[]>([])
   const [err, setErr] = useState('')

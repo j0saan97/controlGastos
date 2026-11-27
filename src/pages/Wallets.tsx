@@ -3,12 +3,14 @@ import { useSearchParams } from 'react-router-dom'
 import { eur, listWallets } from '../lib/api'
 import type { Wallet } from '../types/db'
 import Modal from '../components/Modal'
+import { useHidden } from '../lib/privacy'
 import WalletForm, { WALLET_TYPES } from '../components/WalletForm'
 
 const when = (iso: string) =>
   new Date(iso).toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' })
 
 export default function Wallets() {
+  useHidden() // F10-08: repintar al pulsar 👁
   const [wallets, setWallets] = useState<Wallet[] | null>(null)
   const [err, setErr] = useState('')
   const [showArchived, setShowArchived] = useState(false)

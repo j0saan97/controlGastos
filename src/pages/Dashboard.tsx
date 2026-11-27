@@ -6,6 +6,7 @@ import {
   listUpcoming, listWallets, syncSheet, type CategoryTotal, type MonthTotal, type NetWorthPoint,
 } from '../lib/api'
 import { supabase } from '../lib/supabase'
+import { useHidden } from '../lib/privacy'
 import type { Dashboard as D, Transaction } from '../types/db'
 // Recharts pesa ~400 kB: se descarga aparte para no retrasar las tarjetas
 const IncomeExpenseChart = lazy(() => import('../components/Charts').then((m) => ({ default: m.IncomeExpenseChart })))
@@ -24,6 +25,7 @@ const dueLabel = (iso: string | null, today: string) => {
 }
 
 export default function Dashboard() {
+  const hidden = useHidden() // F10-08
   const [d, setD] = useState<D | null>(null)
   const [charts, setCharts] = useState<ChartsData | null>(null)
   const [busy, setBusy] = useState(false)
@@ -133,7 +135,7 @@ export default function Dashboard() {
             <section className="panel">
               <h3>Ingresos vs gastos · 6 meses</h3>
               <Suspense fallback={<div className="chart-loading" />}>
-                <IncomeExpenseChart data={charts.months} />
+                <IncomeExpenseChart key={String(hidden)} data={charts.months} />
               </Suspense>
             </section>
           </div>
@@ -142,7 +144,7 @@ export default function Dashboard() {
           <section className="panel">
             <h3>Patrimonio · 12 meses</h3>
             <Suspense fallback={<div className="chart-loading" />}>
-              <NetWorthChart data={charts.worth} />
+              <NetWorthChart key={String(hidden)} data={charts.worth} />
             </Suspense>
           </section>
         </>

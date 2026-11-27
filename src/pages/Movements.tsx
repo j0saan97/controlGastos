@@ -5,6 +5,7 @@ import {
 } from '../lib/api'
 import type { Category, Kind, Transaction, Wallet } from '../types/db'
 import Modal from '../components/Modal'
+import { useHidden } from '../lib/privacy'
 import { parseAmount } from '../components/WalletForm'
 
 // ---------- utilidades de fecha (month = 'AAAA-MM-01') ----------
@@ -28,6 +29,7 @@ type Filters = { kind: 'all' | Kind; cat: string; fixed: 'all' | 'fixed' | 'vari
 const NO_FILTERS: Filters = { kind: 'all', cat: 'all', fixed: 'all', status: 'all' }
 
 export default function Movements() {
+  useHidden() // F10-08: repintar al pulsar 👁
   const [month, setMonth] = useState(firstOfMonth())
   const [txs, setTxs] = useState<Transaction[] | null>(null)
   const [cats, setCats] = useState<Category[]>([])

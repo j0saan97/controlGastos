@@ -2,6 +2,7 @@ import {
   Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from 'recharts'
 import { eur, type MonthTotal, type NetWorthPoint } from '../lib/api'
+import { isHidden } from '../lib/privacy'
 
 // Colores de serie validados (CVD y contraste) sobre la tarjeta #1a1d24.
 // Azul/naranja en vez de verde/rojo: verde/rojo no se distinguen con daltonismo.
@@ -24,7 +25,8 @@ const longMonth = (iso: string) => {
   return new Date(y, m - 1, 1).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })
 }
 /** 41.091 → "41k" para el eje */
-const compact = (n: number) => (Math.abs(n) >= 1000 ? `${Math.round(n / 100) / 10}k` : String(Math.round(n)))
+const compact = (n: number) =>
+  isHidden() ? '•••' : Math.abs(n) >= 1000 ? `${Math.round(n / 100) / 10}k` : String(Math.round(n))
 
 const tooltipProps = {
   contentStyle: { background: C.surface, border: `1px solid ${C.grid}`, borderRadius: 10, color: C.text },
