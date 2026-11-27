@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { Empty, LoadState } from '../components/States'
 import { errorText } from '../lib/errors'
 import { useSearchParams } from 'react-router-dom'
 import { eur, listWallets } from '../lib/api'
@@ -35,7 +36,7 @@ export default function Wallets() {
 
   function done() { close(); load(); toast('Cambios guardados') }
 
-  if (!wallets) return <p>{err || 'Cargando…'}</p>
+  if (!wallets) return <LoadState err={err} onRetry={() => { setErr(''); load() }} />
 
   const active = wallets.filter((w) => !w.archived)
   const archived = wallets.filter((w) => w.archived)
@@ -139,7 +140,9 @@ export default function Wallets() {
       </div>
 
       {roots.length === 0 ? (
-        <p className="msg">Aún no tienes carteras. Crea una por cada sitio donde tengas dinero.</p>
+        <Empty icon="👛" title="Aún no tienes carteras" action={<button onClick={() => setEditing('new')}>+ Crear cartera</button>}>
+          Crea una por cada sitio donde tengas dinero.
+        </Empty>
       ) : (
         <ul className="list">{roots.map(item)}</ul>
       )}

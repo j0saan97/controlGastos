@@ -125,6 +125,26 @@ a.link { color: var(--accent); text-decoration: none; font-size: 14px; }
 .upcoming .due { display: inline-block; min-width: 64px; color: var(--muted); font-size: 13px; text-transform: capitalize; }
 .upcoming .due.late { color: var(--neg); font-weight: 600; }
 
+/* Carga, error y vacío (F10-02) */
+.skeleton { display: flex; flex-direction: column; gap: 10px; }
+.skeleton .grid { margin-top: 0; }
+.sk { border-radius: 14px; background: linear-gradient(90deg, #1a1d24 0%, #22262f 50%, #1a1d24 100%);
+  background-size: 200% 100%; animation: sk-shine 1.2s ease-in-out infinite; }
+.sk-title { height: 28px; width: 40%; border-radius: 8px; margin-bottom: 6px; }
+.sk-big { height: 96px; }
+.sk-card { height: 76px; }
+.sk-row { height: 56px; }
+@keyframes sk-shine { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .sk { animation: none; } }
+.state-error { background: var(--card); border-radius: 14px; padding: 18px; display: flex; flex-direction: column;
+  gap: 10px; align-items: flex-start; border-left: 4px solid var(--neg); }
+.state-error span { color: var(--muted); font-size: 14px; }
+.empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;
+  padding: 32px 16px; margin: 14px 0; background: var(--card); border-radius: 14px; }
+.empty-icon { font-size: 36px; line-height: 1; }
+.empty p { margin: 0; color: var(--muted); font-size: 14px; max-width: 340px; line-height: 1.45; }
+.empty button { margin-top: 6px; }
+
 /* Sin conexión (F10-04) */
 .offline { position: sticky; top: 0; z-index: 15; margin: -16px -16px 14px; padding: 10px 16px;
   background: #3a2a12; color: #ffd28a; font-size: 14px; border-bottom: 1px solid #5a4218; }

@@ -121,7 +121,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 
 ## F10 · Pulido y pruebas
 - [x] **F10-01** Toasts de éxito / error
-- [ ] **F10-02** Estados de carga y vacío
+- [x] **F10-02** Estados de carga y vacío
 - [ ] **F10-03** Validación de formularios
 - [x] **F10-04** Pantalla offline (sin conexión)
 - [ ] **F10-05** Tests unitarios parser (`vitest`)

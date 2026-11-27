@@ -1,4 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
+import { LoadState } from '../components/States'
 import { errorText } from '../lib/errors'
 import { CategoryBars } from '../components/CategoryBars'
 import { Link } from 'react-router-dom'
@@ -60,7 +61,7 @@ export default function Dashboard() {
     setBusy(false)
   }
 
-  if (!d) return <p>{err || 'Cargando…'}</p>
+  if (!d) return <LoadState err={err} variant="dashboard" onRetry={() => { setErr(''); load() }} />
 
   // F4-06: sin carteras → bienvenida
   if (hasWallets === false) {

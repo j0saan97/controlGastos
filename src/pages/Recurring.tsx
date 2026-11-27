@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
+import { Empty, LoadState } from '../components/States'
 import { errorText } from '../lib/errors'
 import {
   createRecurring, deleteRecurring, eur, generateMonth, listCategories, listRecurring, updateRecurring,
@@ -41,7 +42,7 @@ export default function Recurring() {
     setBusy(false)
   }
 
-  if (!items) return <p>{err || 'Cargando…'}</p>
+  if (!items) return <LoadState err={err} onRetry={() => { setErr(''); load() }} />
 
   const catById = new Map(cats.map((c) => [c.id, c]))
   const active = items.filter((i) => i.active)
@@ -92,7 +93,9 @@ export default function Recurring() {
       </div>
 
       {items.length === 0 ? (
-        <p className="msg">Añade aquí lo que pagas o cobras todos los meses: hipoteca, perro, suscripciones, nómina…</p>
+        <Empty icon="🔁" title="Sin fijos todavía" action={<button onClick={() => setEditing('new')}>+ Crear el primero</button>}>
+          Añade lo que pagas o cobras todos los meses: hipoteca, perro, suscripciones, nómina…
+        </Empty>
       ) : (
         <ul className="list">{active.map(row)}</ul>
       )}

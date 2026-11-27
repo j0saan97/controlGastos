@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
+import { LoadState } from '../components/States'
 import { errorText } from '../lib/errors'
 import {
   createCategories, deleteCategory, listCategories, updateCategory, type CategoryInput,
@@ -44,7 +45,7 @@ export default function Categories() {
     try { await createCategories(SUGGESTED); await load() } catch (e) { setErr(errorText(e)) }
   }
 
-  if (!cats) return <p>{err || 'Cargando…'}</p>
+  if (!cats) return <LoadState err={err} onRetry={() => { setErr(''); load() }} />
 
   return (
     <section>

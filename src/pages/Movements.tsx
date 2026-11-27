@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
+import { Empty, LoadState } from '../components/States'
 import { errorText } from '../lib/errors'
 import {
   createTransaction, deleteTransaction, eur, firstOfMonth, generateMonth, listCategories, listTransactions,
@@ -189,11 +190,15 @@ export default function Movements() {
 
       {/* F8-02 listado: pendientes arriba, pagados abajo */}
       {!txs ? (
-        <p>{err || 'Cargando…'}</p>
+        <LoadState err={err} variant="rows" onRetry={() => load(month)} />
       ) : all.length === 0 ? (
-        <p className="msg">No hay movimientos en {monthLabel(month)}. Pulsa “+ Nuevo” para apuntar un gasto o ingreso.</p>
+        <Empty icon="🧾" title={`Nada apuntado en ${monthLabel(month)}`}
+          action={<button onClick={() => setEditing('new')}>+ Apuntar gasto o ingreso</button>}>
+          Los fijos activos aparecen solos al abrir el mes. Lo demás, apúntalo aquí.
+        </Empty>
       ) : visible.length === 0 ? (
-        <p className="msg">Ningún movimiento con esos filtros.</p>
+        <Empty icon="🔍" title="Ningún movimiento con esos filtros"
+          action={<button className="secondary" onClick={() => setFilters(NO_FILTERS)}>Quitar filtros</button>} />
       ) : (
         <>
           {pending.length > 0 && <h3 className="sub">Pendientes ({pending.length})</h3>}
