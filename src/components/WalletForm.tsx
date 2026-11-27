@@ -18,9 +18,16 @@ export function parseAmount(s: string): number {
   return normalized === '' ? NaN : Number(normalized)
 }
 
-type Props = { wallet?: Wallet; onDone: () => void }
+type Props = {
+  wallet?: Wallet
+  /** Carteras raíz disponibles como grupo padre (sin parent_id propio) */
+  parentOptions?: Wallet[]
+  /** Esta cartera ya tiene hijos → su saldo es calculado automáticamente */
+  isParent?: boolean
+  onDone: () => void
+}
 
-export default function WalletForm({ wallet, onDone }: Props) {
+export default function WalletForm({ wallet, parentOptions = [], isParent = false, onDone }: Props) {
   const editing = !!wallet
   const [name, setName] = useState(wallet?.name ?? '')
   const [type, setType] = useState<Wallet['type']>(wallet?.type ?? 'bank')
@@ -29,10 +36,13 @@ export default function WalletForm({ wallet, onDone }: Props) {
   const [url, setUrl] = useState(wallet?.sheet_csv_url ?? '')
   const [balanceCell, setBalanceCell] = useState(wallet?.sheet_balance_cell ?? 'A1')
   const [pnlCell, setPnlCell] = useState(wallet?.sheet_pnl_cell ?? 'B1')
+  const [parentId, setParentId] = useState<string>(wallet?.parent_id ?? '')
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
 
   const sheet = type === 'poker' && fromSheet
+  // Saldo calculado si es grupo padre o si tiene padre y source=sheet
+  const autoBalance = isParent || (!!parentId && sheet)
 
   async function run(action: () => Promise<unknown>) {
     setBusy(true); setErr('')
@@ -42,9 +52,9 @@ export default function WalletForm({ wallet, onDone }: Props) {
 
   function submit(e: FormEvent) {
     e.preventDefault()
-    const amount = sheet ? (wallet?.balance ?? 0) : parseAmount(balance)
+    const amount = autoBalance ? (wallet?.balance ?? 0) : (sheet ? (wallet?.balance ?? 0) : parseAmount(balance))
     if (!name.trim()) return setErr('Pon un nombre')
-    if (!Number.isFinite(amount)) return setErr('Saldo no válido. Ejemplo: 1.234,56')
+    if (!autoBalance && !sheet && !Number.isFinite(amount)) return setErr('Saldo no válido. Ejemplo: 1.234,56')
     if (sheet && !/^https:\/\//.test(url.trim())) return setErr('Pega el enlace CSV publicado (https://…)')
     if (sheet && (!CELL.test(balanceCell.toUpperCase()) || !CELL.test(pnlCell.toUpperCase())))
       return setErr('Celdas no válidas. Ejemplo: A1')
@@ -54,6 +64,7 @@ export default function WalletForm({ wallet, onDone }: Props) {
       type,
       balance: Math.round(amount * 100) / 100,
       source: sheet ? 'sheet' : 'manual',
+      parent_id: parentId || null,
       sheet_csv_url: sheet ? url.trim() : null,
       sheet_balance_cell: balanceCell.toUpperCase(),
       sheet_pnl_cell: pnlCell.toUpperCase(),
@@ -62,7 +73,6 @@ export default function WalletForm({ wallet, onDone }: Props) {
     run(async () => {
       if (editing) await updateWallet(wallet.id, input)
       else await createWallet(input)
-      // Poker: intenta leer el Sheet ya (falla en local sin /api, no pasa nada)
       if (sheet) await syncSheet().catch(() => {})
     })
   }
@@ -86,14 +96,27 @@ export default function WalletForm({ wallet, onDone }: Props) {
         </select>
       </label>
 
-      {type === 'poker' && (
+      {/* Selector de grupo padre (solo si hay grupos disponibles y no es ya un grupo padre) */}
+      {!isParent && parentOptions.length > 0 && (
+        <label>
+          Pertenece al grupo
+          <select value={parentId} onChange={(e) => setParentId(e.target.value)}>
+            <option value="">— Cartera independiente —</option>
+            {parentOptions.map((p) => (
+              <option key={p.id} value={p.id}>{p.name}</option>
+            ))}
+          </select>
+        </label>
+      )}
+
+      {type === 'poker' && !parentId && (
         <label className="check">
           <input type="checkbox" checked={fromSheet} onChange={(e) => setFromSheet(e.target.checked)} />
           Leer saldo del Google Sheet
         </label>
       )}
 
-      {sheet ? (
+      {sheet && !parentId ? (
         <>
           <label>
             Enlace CSV publicado
@@ -105,6 +128,8 @@ export default function WalletForm({ wallet, onDone }: Props) {
           </div>
           <p className="msg">El saldo se actualiza solo desde el Sheet (al abrir la app y a las 03:00).</p>
         </>
+      ) : isParent ? (
+        <p className="msg">Saldo calculado automáticamente como suma de las salas/billeteras del grupo.</p>
       ) : (
         <label>
           {editing ? 'Saldo actual (€)' : 'Saldo inicial (€)'}

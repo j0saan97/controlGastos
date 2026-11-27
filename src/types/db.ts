@@ -6,6 +6,7 @@ export type Wallet = {
   type: 'bank' | 'ewallet' | 'poker' | 'cash'
   balance: number
   source: 'manual' | 'sheet'
+  parent_id: string | null
   sheet_csv_url: string | null
   sheet_balance_cell: string
   sheet_pnl_cell: string

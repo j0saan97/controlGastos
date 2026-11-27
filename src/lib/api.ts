@@ -106,7 +106,7 @@ export async function markPending(txId: string) {
 
 export type WalletInput = Pick<
   Wallet,
-  'name' | 'type' | 'balance' | 'source' | 'sheet_csv_url' | 'sheet_balance_cell' | 'sheet_pnl_cell'
+  'name' | 'type' | 'balance' | 'source' | 'parent_id' | 'sheet_csv_url' | 'sheet_balance_cell' | 'sheet_pnl_cell'
 >
 
 export async function listWallets(): Promise<Wallet[]> {
@@ -115,16 +115,18 @@ export async function listWallets(): Promise<Wallet[]> {
     .select('*')
     .order('created_at')
   if (error) throw error
-  return data as Wallet[]
+  return data as unknown as Wallet[]
 }
 
 export async function createWallet(w: WalletInput) {
-  const { error } = await supabase.from('wallets').insert(w)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error } = await supabase.from('wallets').insert(w as any)
   if (error) throw error
 }
 
 export async function updateWallet(id: string, patch: Partial<WalletInput> & { archived?: boolean }) {
-  const { error } = await supabase.from('wallets').update(patch).eq('id', id)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error } = await supabase.from('wallets').update(patch as any).eq('id', id)
   if (error) throw error
 }
 
