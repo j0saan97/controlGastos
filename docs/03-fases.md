@@ -128,6 +128,7 @@ Leyenda: `- [x]` hecho · `- [ ]` pendiente · código `F<fase>-<nº>`
 - [ ] **F10-05** Tests unitarios parser (`vitest`)
 - [ ] **F10-06** Prueba con 2 usuarios reales (RLS)
 - [ ] **F10-07** Revisar accesibilidad y tamaño táctil
+- [ ] **F10-08** Botón 👁 ocultar/mostrar saldos: importes como `••••` en Resumen y Carteras; recuerda la elección (localStorage)
 
 ## F11 · Futuro / ideas
 - [ ] **F11-01** Google Sheets por OAuth (privado)
